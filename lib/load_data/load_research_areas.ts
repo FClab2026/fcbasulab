@@ -1,27 +1,50 @@
 'use server'
-import { prisma } from '@/lib/prisma'
-import { unstable_cache } from 'next/cache'
+
+import { client } from '@/sanity/lib/client'
+import { urlFor } from '@/sanity/lib/image'
+import { groq } from 'next-sanity'
+import { toHTML } from '@portabletext/to-html'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { SanityImageSource } from '@sanity/image-url'
+
+const RESEARCH_AREAS = groq`
+  *[_type == "researchArea"] | order(_createdAt desc) {
+    "id": _id,
+    name,
+    body,
+    image,
+    "updatedAt": _updatedAt,
+    "createdAt": _createdAt
+  }
+`
+
+const ptToHtml = (blocks: PortableTextBlock[] | null | undefined) =>
+  blocks && blocks.length ? toHTML(blocks) : ''
 
 export default async function fetchResearchAreas() {
-  return unstable_cache(
-    async () => {
-      try {
-        const newsData = await prisma.researchAreas.findMany({
-          orderBy: {
-            createdAt: 'desc'
-          }
-        })
-        
-        return newsData
-      } catch (error) {
-        console.error('Error fetching researchAreas:', error)
-        return null
-      }
-    },
-    [`researchAreas`],
-    {
-      revalidate: 12*3600, // Cache for 12 hours
-      tags: ['researchAreas']
-    }
-  )()
+  try {
+    const rows = await client.fetch<
+      {
+        id: string
+        name: string
+        body: PortableTextBlock[]
+        image: SanityImageSource | null
+        updatedAt: string
+        createdAt: string
+      }[]
+    >(RESEARCH_AREAS)
+
+    return rows.map((r) => ({
+      id: r.id,
+      name: r.name,
+      body: ptToHtml(r.body),
+      imgUrl: r.image ? urlFor(r.image).width(1200).url() : null,
+      createdAt: r.createdAt,
+      updatedAt: r.updatedAt,
+    }))
+  } catch (error) {
+    console.error('Error fetching researchAreas:', error)
+    if (process.env.NODE_ENV !== 'production') throw error
+    return null
+  }
 }

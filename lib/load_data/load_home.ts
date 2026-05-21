@@ -1,9 +1,10 @@
 'use server'
-import { prisma } from '@/lib/prisma'
-import { unstable_cache } from 'next/cache'
-import { PublicationCategory, ResearchStatus, ResearchProjectType } from '@/lib/generated/prisma/enums'
 
-const REVALIDATE = 3600
+import { client as sanityClient } from '@/sanity/lib/client'
+import { groq } from 'next-sanity'
+import { toHTML } from '@portabletext/to-html'
+import type { PortableTextBlock } from '@portabletext/types'
+import { PublicationCategory, ResearchStatus, ResearchProjectType } from '@/lib/generated/prisma/enums'
 
 export interface HomeStats {
   publications: number
@@ -14,22 +15,17 @@ export interface HomeStats {
   equipments: number
 }
 
+const HOME_STATS = groq`{
+  "publications": count(*[_type == "publication"]),
+  "projects": count(*[_type == "project"]),
+  "awards": count(*[_type == "award"]),
+  "alumni": count(*[_type == "alumni"]),
+  "groupMembers": count(*[_type == "groupMember"]),
+  "equipments": count(*[_type == "equipment"])
+}`
+
 export async function fetchHomeStats(): Promise<HomeStats> {
-  return unstable_cache(
-    async () => {
-      const [publications, projects, awards, alumni, groupMembers, equipments] = await Promise.all([
-        prisma.publications.count(),
-        prisma.researchProjects.count(),
-        prisma.awards.count(),
-        prisma.alumni.count(),
-        prisma.groupMembers.count(),
-        prisma.equipments.count(),
-      ])
-      return { publications, projects, awards, alumni, groupMembers, equipments }
-    },
-    ['home-stats'],
-    { revalidate: REVALIDATE, tags: ['home-stats', 'publications', 'projects', 'awards', 'alumni', 'group', 'equipments'] }
-  )()
+  return sanityClient.fetch<HomeStats>(HOME_STATS)
 }
 
 export interface HomePublicationItem {
@@ -39,23 +35,25 @@ export interface HomePublicationItem {
   year: number | null
 }
 
+const LATEST_PUBLICATIONS = groq`
+  *[_type == "publication"] | order(year desc, _createdAt desc)[0...$limit] {
+    "id": _id, body, category, year
+  }
+`
+
+const ptToHtml = (blocks: PortableTextBlock[] | null | undefined) =>
+  blocks && blocks.length ? toHTML(blocks) : ''
+
 export async function fetchLatestPublications(limit = 4): Promise<HomePublicationItem[]> {
-  return unstable_cache(
-    async () => {
-      const rows = await prisma.publications.findMany({
-        orderBy: [{ year: 'desc' }, { updatedAt: 'desc' }],
-        take: limit,
-      })
-      return rows.map((r) => ({
-        id: r.id,
-        body: r.body,
-        category: r.category,
-        year: r.year,
-      }))
-    },
-    [`home-publications-${limit}`],
-    { revalidate: REVALIDATE, tags: ['publications'] }
-  )()
+  const rows = await sanityClient.fetch<
+    { id: string; body: PortableTextBlock[] | null; category: PublicationCategory; year: number | null }[]
+  >(LATEST_PUBLICATIONS, { limit })
+  return rows.map((r) => ({
+    id: r.id,
+    body: ptToHtml(r.body),
+    category: r.category,
+    year: r.year,
+  }))
 }
 
 export interface HomeProjectItem {
@@ -68,26 +66,33 @@ export interface HomeProjectItem {
   completedOn: string | null
 }
 
+const LATEST_PROJECTS = groq`
+  *[_type == "project"] | order(_createdAt desc)[0...$limit] {
+    "id": _id, title, description, status, type, duration, completedOn
+  }
+`
+
 export async function fetchLatestProjects(limit = 2): Promise<HomeProjectItem[]> {
-  return unstable_cache(
-    async () => {
-      const rows = await prisma.researchProjects.findMany({
-        orderBy: { createdAt: 'desc' },
-        take: limit,
-      })
-      return rows.map((r) => ({
-        id: r.id,
-        title: r.title,
-        description: r.description,
-        status: r.status,
-        type: r.type,
-        duration: r.duration,
-        completedOn: r.completedOn ? r.completedOn.toISOString() : null,
-      }))
-    },
-    [`home-projects-${limit}`],
-    { revalidate: REVALIDATE, tags: ['projects'] }
-  )()
+  const rows = await sanityClient.fetch<
+    {
+      id: string
+      title: string
+      description: string | null
+      status: ResearchStatus
+      type: ResearchProjectType
+      duration: string | null
+      completedOn: string | null
+    }[]
+  >(LATEST_PROJECTS, { limit })
+  return rows.map((r) => ({
+    id: r.id,
+    title: r.title,
+    description: r.description,
+    status: r.status,
+    type: r.type,
+    duration: r.duration,
+    completedOn: r.completedOn,
+  }))
 }
 
 export interface HomeEquipmentItem {
@@ -100,24 +105,12 @@ export interface HomeEquipmentItem {
   installedOn: string
 }
 
+const LATEST_EQUIPMENTS = groq`
+  *[_type == "equipment"] | order(_createdAt desc)[0...$limit] {
+    "id": _id, name, manufacturer, model, serialNumber, category, installedOn
+  }
+`
+
 export async function fetchLatestEquipments(limit = 8): Promise<HomeEquipmentItem[]> {
-  return unstable_cache(
-    async () => {
-      const rows = await prisma.equipments.findMany({
-        orderBy: { createdAt: 'desc' },
-        take: limit,
-      })
-      return rows.map((r) => ({
-        id: r.id,
-        name: r.name,
-        manufacturer: r.manufacturer,
-        model: r.model,
-        serialNumber: r.serialNumber,
-        category: r.category,
-        installedOn: r.installedOn.toISOString(),
-      }))
-    },
-    [`home-equipments-${limit}`],
-    { revalidate: REVALIDATE, tags: ['equipments'] }
-  )()
+  return sanityClient.fetch<HomeEquipmentItem[]>(LATEST_EQUIPMENTS, { limit })
 }

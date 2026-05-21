@@ -1,58 +1,61 @@
 'use server';
 
-import { prisma } from '@/lib/prisma';
+import { client } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
+import { MEMBERS_BY_CATEGORY } from '@/sanity/lib/queries';
 import { GroupCategory } from '@/lib/generated/prisma/enums';
-import { unstable_cache } from 'next/cache';
+import type { SanityImageSource } from '@sanity/image-url';
 
 const MEMBERS_PER_SECTION = 15;
 
-export const fetchMembersByCategory = unstable_cache(
-  async (category: GroupCategory, page: number = 1) => {
-    try {
-      const skip = (page - 1) * MEMBERS_PER_SECTION;
+export async function fetchMembersByCategory(category: GroupCategory, page: number = 1) {
+  try {
+    const start = (page - 1) * MEMBERS_PER_SECTION;
+    const end = start + MEMBERS_PER_SECTION;
 
-      const [members, total] = await Promise.all([
-        prisma.groupMembers.findMany({
-          where: { category },
-          skip,
-          take: MEMBERS_PER_SECTION,
-          orderBy: {
-            createdAt: 'desc',
-          },
-        }),
-        prisma.groupMembers.count({ where: { category } }),
-      ]);
+    const { items, total } = await client.fetch<{
+      items: {
+        id: string;
+        name: string;
+        email: string;
+        researchAreas: string | null;
+        designation: string | null;
+        category: GroupCategory;
+        profileImage: SanityImageSource | null;
+        profileLink: string | null;
+        phoneNumber: string | null;
+      }[];
+      total: number;
+    }>(MEMBERS_BY_CATEGORY, { category, start, end });
 
-      return {
-        success: true,
-        data: members.map((m) => ({
-          id: m.id,
-          name: m.name,
-          email: m.email,
-          researchAreas: m.researchAreas || '',
-          designation: m.designation,
-          category: m.category,
-          profileImgUrl: m.profileImgUrl,
-          profileLink: m.profileLink,
-          phoneNumber: m.phoneNumber,
-        })),
-        meta: {
-          total,
-          page,
-          limit: MEMBERS_PER_SECTION,
-          totalPages: Math.ceil(total / MEMBERS_PER_SECTION),
-        },
-      };
-    } catch (error) {
-      console.error('Error fetching members:', error);
-      return {
-        success: false,
-        data: [],
-        meta: { total: 0, page: 1, limit: MEMBERS_PER_SECTION, totalPages: 0 },
-        error: 'Failed to fetch members',
-      };
-    }
-  },
-  ['members-by-category'],
-  { revalidate: 3600, tags: ['members'] }
-);
+    return {
+      success: true,
+      data: items.map((m) => ({
+        id: m.id,
+        name: m.name,
+        email: m.email,
+        researchAreas: m.researchAreas || '',
+        designation: m.designation,
+        category: m.category,
+        profileImgUrl: m.profileImage ? urlFor(m.profileImage).width(800).url() : null,
+        profileLink: m.profileLink,
+        phoneNumber: m.phoneNumber,
+      })),
+      meta: {
+        total,
+        page,
+        limit: MEMBERS_PER_SECTION,
+        totalPages: Math.ceil(total / MEMBERS_PER_SECTION),
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching members:', error);
+    if (process.env.NODE_ENV !== 'production') throw error;
+    return {
+      success: false,
+      data: [],
+      meta: { total: 0, page: 1, limit: MEMBERS_PER_SECTION, totalPages: 0 },
+      error: 'Failed to fetch members',
+    };
+  }
+}

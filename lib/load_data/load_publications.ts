@@ -1,6 +1,9 @@
 'use server'
-import { prisma } from '@/lib/prisma'
-import { unstable_cache } from 'next/cache'
+
+import { client } from '@/sanity/lib/client'
+import { groq } from 'next-sanity'
+import { toHTML } from '@portabletext/to-html'
+import type { PortableTextBlock } from '@portabletext/types'
 import { PublicationCategory } from '@/lib/generated/prisma/enums'
 
 export interface PublicationItem {
@@ -18,85 +21,79 @@ export interface CategoryGroup {
   hasMore: boolean
 }
 
-const serialize = (rows: { id: string; body: string; category: PublicationCategory; year: number | null; createdAt: Date }[]): PublicationItem[] =>
-  rows.map((r) => ({
-    id: r.id,
-    body: r.body,
-    category: r.category,
-    year: r.year,
-    createdAt: r.createdAt.toISOString(),
-  }))
+const PUBLICATIONS_BY_CATEGORY = groq`{
+  "items": *[_type == "publication" && category == $category]
+    | order(year desc, _createdAt desc)[$start...$end] {
+    "id": _id,
+    body,
+    category,
+    year,
+    "createdAt": _createdAt
+  },
+  "total": count(*[_type == "publication" && category == $category])
+}`
 
-/**
- * Returns the top `pageSize` (default 10) publications for every category, plus totals.
- * Used for the initial SSR render.
- */
-export async function fetchAllCategoriesInitial(pageSize: number = 10): Promise<CategoryGroup[]> {
-  return unstable_cache(
-    async () => {
-      const categories = Object.values(PublicationCategory) as PublicationCategory[]
-
-      const results = await Promise.all(
-        categories.map(async (category) => {
-          const [items, total] = await Promise.all([
-            prisma.publications.findMany({
-              where: { category },
-              orderBy: [{ year: 'desc' }, { createdAt: 'desc' }],
-              take: pageSize,
-              select: { id: true, body: true, category: true, year: true, createdAt: true },
-            }),
-            prisma.publications.count({ where: { category } }),
-          ])
-          return {
-            category,
-            items: serialize(items),
-            total,
-            hasMore: total > pageSize,
-          } satisfies CategoryGroup
-        })
-      )
-
-      return results
-    },
-    [`publications-initial-${pageSize}`],
-    { revalidate: 3600, tags: ['publications'] }
-  )()
+interface RawPublication {
+  id: string
+  body: PortableTextBlock[] | null
+  category: PublicationCategory
+  year: number | null
+  createdAt: string
 }
 
-/**
- * Returns a page of publications for a single category. Called client-side by the "Load more" button.
- */
+const ptToHtml = (blocks: PortableTextBlock[] | null | undefined) =>
+  blocks && blocks.length ? toHTML(blocks) : ''
+
+const serialize = (rows: RawPublication[]): PublicationItem[] =>
+  rows.map((r) => ({
+    id: r.id,
+    body: ptToHtml(r.body),
+    category: r.category,
+    year: r.year,
+    createdAt: r.createdAt,
+  }))
+
+async function fetchCategoryPage(category: PublicationCategory, page: number, pageSize: number) {
+  const start = (page - 1) * pageSize
+  const end = start + pageSize
+  return client.fetch<{ items: RawPublication[]; total: number }>(
+    PUBLICATIONS_BY_CATEGORY,
+    { category, start, end },
+  )
+}
+
+export async function fetchAllCategoriesInitial(pageSize: number = 10): Promise<CategoryGroup[]> {
+  const categories = Object.values(PublicationCategory) as PublicationCategory[]
+  const results = await Promise.all(
+    categories.map(async (category) => {
+      const { items, total } = await fetchCategoryPage(category, 1, pageSize)
+      return {
+        category,
+        items: serialize(items),
+        total,
+        hasMore: total > pageSize,
+      } satisfies CategoryGroup
+    }),
+  )
+  return results
+}
+
 export async function fetchPublicationsPageAction(
   category: PublicationCategory,
   page: number,
-  pageSize: number = 10
+  pageSize: number = 10,
 ): Promise<{ success: boolean; items: PublicationItem[]; total: number; hasMore: boolean }> {
   try {
-    return await unstable_cache(
-      async () => {
-        const [rows, total] = await Promise.all([
-          prisma.publications.findMany({
-            where: { category },
-            orderBy: [{ year: 'desc' }, { createdAt: 'desc' }],
-            skip: (page - 1) * pageSize,
-            take: pageSize,
-            select: { id: true, body: true, category: true, year: true, createdAt: true },
-          }),
-          prisma.publications.count({ where: { category } }),
-        ])
-        const items = serialize(rows)
-        return {
-          success: true,
-          items,
-          total,
-          hasMore: total > page * pageSize,
-        }
-      },
-      [`publications-${category}-${page}-${pageSize}`],
-      { revalidate: 3600, tags: ['publications'] }
-    )()
+    const { items, total } = await fetchCategoryPage(category, page, pageSize)
+    return {
+      success: true,
+      items: serialize(items),
+      total,
+      hasMore: total > page * pageSize,
+    }
   } catch (err) {
     console.error('Failed to fetch publications page:', err)
+    if (process.env.NODE_ENV !== 'production') throw err
     return { success: false, items: [], total: 0, hasMore: false }
   }
 }

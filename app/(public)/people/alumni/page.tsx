@@ -13,6 +13,13 @@ export const metadata: Metadata = {
 const AlumniPage = async () => {
   const result = await fetchAlumniAction({ page: 1, pageSize: 20 });
 
+  console.log("[AlumniPage] result", {
+    success: result.success,
+    count: result.data?.length,
+    total: result.total,
+    firstItem: result.data?.[0],
+  });
+
   const alumni = result.success ? result.data : [];
   const hasMore = result.hasMore;
 
