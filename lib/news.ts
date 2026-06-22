@@ -4,7 +4,7 @@ import { client } from '@/sanity/lib/client'
 import { groq } from 'next-sanity'
 import { toHTML } from '@portabletext/to-html'
 import type { PortableTextBlock } from '@portabletext/types'
-import { NewsAndAnnouncementsType } from './generated/prisma/client'
+import { NewsAndAnnouncementsType } from './enums'
 
 const NEWS_PAGE = groq`{
   "items": *[_type == "news" && (!defined($type) || type == $type)]

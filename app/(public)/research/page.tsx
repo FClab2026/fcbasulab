@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { fetchResearchByStatus } from '@/lib/load_data/loadResearch'
-import { ResearchStatus } from '@/lib/generated/prisma/enums'
+import { ResearchStatus } from '@/lib/enums'
 import { Loader2, ChevronDown } from 'lucide-react'
 import ResearchAnimations from '@/components/pub/researchAnimations'
 

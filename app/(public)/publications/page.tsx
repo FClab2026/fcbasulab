@@ -1,11 +1,8 @@
 import { Metadata } from 'next'
-import { PublicationCategory } from '@/lib/generated/prisma/enums'
+import { PublicationCategory } from '@/lib/enums'
 import { fetchAllCategoriesInitial } from '@/lib/load_data/load_publications'
 import CategorySection from './_components/CategorySection'
 
-// ISR: page is statically generated and re-validated every hour.
-// Data-layer cache (unstable_cache) also uses the 'publications' tag —
-// admins can call revalidateTag('publications') after any mutation to bust both.
 export const revalidate = 3600
 
 const INITIAL_PAGE_SIZE = 10

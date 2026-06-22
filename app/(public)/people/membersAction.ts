@@ -3,7 +3,7 @@
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { MEMBERS_BY_CATEGORY } from '@/sanity/lib/queries';
-import { GroupCategory } from '@/lib/generated/prisma/enums';
+import { GroupCategory } from '@/lib/enums';
 import type { SanityImageSource } from '@sanity/image-url';
 
 const MEMBERS_PER_SECTION = 15;

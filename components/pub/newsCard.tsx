@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { fetchNewsAction } from '@/lib/news';
-import { Reveal } from '@/components/pub/reveal';
+import InfiniteCarousel from '@/components/pub/InfiniteCarousel';
 
 interface NewsCardProps {
   title: string;
@@ -11,21 +11,31 @@ interface NewsCardProps {
   createdAt: Date | string;
 }
 
+function stripHtml(s: string): string {
+  return s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
 export const NewsCard = ({ title, body, createdAt }: NewsCardProps) => {
+  const plainText = stripHtml(body);
+
   return (
-    <div className="news-card">
-      <h3 className="news-card-title">{title}</h3>
-      <div className="news-card-date">
+    <div className="group/newscard relative flex flex-col bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all duration-300 h-full w-full">
+      <h3 
+        className="text-lg font-serif font-bold text-slate-950 mb-2 line-clamp-2 leading-snug group-hover/newscard:text-amber-700 transition-colors duration-200" 
+        title={title}
+      >
+        {title}
+      </h3>
+      <div className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase mb-4">
         {new Date(createdAt).toLocaleDateString('en-US', {
           month: 'short',
           day: 'numeric',
           year: 'numeric'
         })}
       </div>
-      <div
-        className="news-card-body prose prose-sm max-w-none line-clamp-3"
-        dangerouslySetInnerHTML={{ __html: body }}
-      />
+      <p className="text-slate-600 text-xs leading-relaxed line-clamp-3 flex-1">
+        {plainText}
+      </p>
     </div>
   )
 }
@@ -91,23 +101,23 @@ const NewsSection = () => {
           <Link href="/news/events" className="section-link">View all news &rarr;</Link>
         </div>
 
-        <div className="news-grid min-h-[200px]">
-          {loading && !hasLoaded ? (
-            <>
-              {[...Array(5)].map((_, i) => (
-                <NewsSkeleton key={i} />
-              ))}
-            </>
-          ) : (
-            <>
-              {itemsToShow.map((item, index) => (
-                <Reveal key={item.id || index} delay={index * 0.08} y={20} duration={0.6}>
-                  <NewsCard {...item} />
-                </Reveal>
-              ))}
-            </>
-          )}
-        </div>
+        {loading && !hasLoaded ? (
+          <div className="flex gap-6 overflow-hidden">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="w-[320px] min-w-[320px]">
+                <NewsSkeleton />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <InfiniteCarousel speed={35} gap={24}>
+            {itemsToShow.map((item, index) => (
+              <div key={item.id || index} className="w-[320px] min-w-[320px] flex">
+                <NewsCard {...item} />
+              </div>
+            ))}
+          </InfiniteCarousel>
+        )}
       </div>
     </section>
   )

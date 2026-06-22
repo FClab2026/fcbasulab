@@ -4,7 +4,7 @@ import { client as sanityClient } from '@/sanity/lib/client'
 import { groq } from 'next-sanity'
 import { toHTML } from '@portabletext/to-html'
 import type { PortableTextBlock } from '@portabletext/types'
-import { PublicationCategory, ResearchStatus, ResearchProjectType } from '@/lib/generated/prisma/enums'
+import { PublicationCategory, ResearchStatus, ResearchProjectType } from '@/lib/enums'
 
 export interface HomeStats {
   publications: number
@@ -21,7 +21,7 @@ const HOME_STATS = groq`{
   "awards": count(*[_type == "award"]),
   "alumni": count(*[_type == "alumni"]),
   "groupMembers": count(*[_type == "groupMember"]),
-  "equipments": count(*[_type == "equipment"])
+  "equipments": count(*[_type == "researchEquipment"])
 }`
 
 export async function fetchHomeStats(): Promise<HomeStats> {
@@ -98,19 +98,43 @@ export async function fetchLatestProjects(limit = 2): Promise<HomeProjectItem[]>
 export interface HomeEquipmentItem {
   id: string
   name: string
-  manufacturer: string
-  model: string
-  serialNumber: string
-  category: string
-  installedOn: string
+  body: string
+  imgUrl: string | null
+  createdAt: string
+  updatedAt: string
 }
 
 const LATEST_EQUIPMENTS = groq`
-  *[_type == "equipment"] | order(_createdAt desc)[0...$limit] {
-    "id": _id, name, manufacturer, model, serialNumber, category, installedOn
+  *[_type == "researchEquipment"] | order(_createdAt desc)[0...$limit] {
+    "id": _id,
+    name,
+    body,
+    image,
+    "createdAt": _createdAt,
+    "updatedAt": _updatedAt
   }
 `
 
-export async function fetchLatestEquipments(limit = 8): Promise<HomeEquipmentItem[]> {
-  return sanityClient.fetch<HomeEquipmentItem[]>(LATEST_EQUIPMENTS, { limit })
+export async function fetchLatestEquipments(limit = 5): Promise<HomeEquipmentItem[]> {
+  const rows = await sanityClient.fetch<
+    {
+      id: string
+      name: string
+      body: PortableTextBlock[] | null
+      image: any
+      createdAt: string
+      updatedAt: string
+    }[]
+  >(LATEST_EQUIPMENTS, { limit })
+
+  const { urlFor } = await import('@/sanity/lib/image')
+
+  return rows.map((r) => ({
+    id: r.id,
+    name: r.name,
+    body: ptToHtml(r.body),
+    imgUrl: r.image ? urlFor(r.image).width(800).url() : null,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+  }))
 }

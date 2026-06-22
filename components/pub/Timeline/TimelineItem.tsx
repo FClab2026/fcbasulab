@@ -12,7 +12,7 @@ interface TimelineItemProps {
   showDate?: boolean;
 }
 
-export const TimelineItem = ({ item, index, showDate = true }: TimelineItemProps) => {
+export const TimelineItem = ({ item, index, showDate = false }: TimelineItemProps) => {
   const date = item.updatedAt ? new Date(item.updatedAt) : null;
   const relativeDate = date ? formatDistanceToNow(date, { addSuffix: true }) : null;
   const fallbackDate = date ? format(date, "MMM yyyy") : null;

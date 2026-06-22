@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { ChevronDown, Loader2 } from 'lucide-react';
 import PublicGroupMemberCard from '@/components/pub/PublicGroupMemberCard';
 import { fetchMembersByCategory } from '../membersAction';
-import { GroupCategory } from '@/lib/generated/prisma/enums';
+import { GroupCategory } from '@/lib/enums';
 
 interface Member {
   id: string;

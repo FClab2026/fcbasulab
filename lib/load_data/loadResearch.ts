@@ -2,7 +2,7 @@
 
 import { client } from '@/sanity/lib/client'
 import { groq } from 'next-sanity'
-import { ResearchStatus } from '@/lib/generated/prisma/enums'
+import { ResearchStatus } from '@/lib/enums'
 
 const PROJECTS_BY_STATUS = groq`{
   "items": *[_type == "project" && status == $status]

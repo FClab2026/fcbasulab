@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Loader2 } from 'lucide-react'
+import { format } from 'date-fns'
 
 import fetchGalleryAction from '@/lib/load_data/load_gallery'
 
@@ -30,12 +31,9 @@ const getFullImageUrl = (url: string | null | undefined) => {
         : `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${url}`
 }
 
-const formatDate = (d: Date | string) =>
-    new Date(d).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-    })
+// "d MMM''yy" -> the doubled '' is date-fns' escape for a literal
+// apostrophe, giving e.g. "23 Feb'26"
+const formatDate = (d: Date | string) => format(new Date(d), "d MMM''yy")
 
 const GalleryClient = ({ initialGallery, hasMoreInitial }: GalleryClientProps) => {
     const [gallery, setGallery] = useState<GalleryItem[]>(initialGallery)
@@ -98,9 +96,14 @@ const GalleryClient = ({ initialGallery, hasMoreInitial }: GalleryClientProps) =
 
     return (
         <div>
+            {/* auto-fill + a capped track size keeps every card a fixed,
+                compact width (between 230–270px) instead of stretching to
+                fill a 1/3-of-the-container grid column. Cards wrap onto new
+                rows as space allows, and a lone item no longer looks
+                stranded in an oversized column. */}
             <ul
                 role="list"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+                className="grid grid-cols-[repeat(auto-fill,minmax(230px,270px))] gap-4 md:gap-5"
             >
                 {gallery.map((item, index) => {
                     const imgUrl = getFullImageUrl(item.imgUrl)
@@ -130,27 +133,27 @@ const GalleryClient = ({ initialGallery, hasMoreInitial }: GalleryClientProps) =
                                         fill
                                         loading={index < 3 ? 'eager' : 'lazy'}
                                         priority={index < 3}
-                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        sizes="(max-width: 640px) 100vw, 270px"
                                         className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                                     />
                                 </div>
 
-                                <div className="flex flex-col flex-1 p-5 md:p-6">
-                                    <time
-                                        dateTime={new Date(item.createdAt).toISOString()}
-                                        className="text-[11px] font-semibold tracking-[0.14em] uppercase text-amber-700 mb-2"
-                                    >
-                                        {formatDate(item.createdAt)}
-                                    </time>
-
-                                    <h2 className="font-serif text-lg md:text-xl leading-snug text-slate-900 tracking-tight mb-2 group-hover:text-slate-700 transition-colors">
+                                <div className="flex flex-col flex-1 p-3.5 md:p-4">
+                                    <h2 className="font-serif text-base leading-snug text-slate-900 tracking-tight mb-1 group-hover:text-slate-700 transition-colors">
                                         {item.title}
                                     </h2>
 
                                     <div
-                                        className="prose prose-sm max-w-none text-slate-600 leading-relaxed line-clamp-3 prose-p:my-0 prose-a:text-amber-700 prose-strong:text-slate-900"
+                                        className="prose prose-sm max-w-none text-slate-600 leading-snug line-clamp-2 prose-p:my-0 prose-a:text-amber-700 prose-strong:text-slate-900 text-[13px]"
                                         dangerouslySetInnerHTML={{ __html: item.description }}
                                     />
+
+                                    <time
+                                        dateTime={new Date(item.createdAt).toISOString()}
+                                        className="mt-auto pt-2 text-[10px] font-semibold tracking-[0.12em] uppercase text-amber-700"
+                                    >
+                                        {formatDate(item.createdAt)}
+                                    </time>
                                 </div>
                             </article>
                         </motion.li>

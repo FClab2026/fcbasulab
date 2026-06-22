@@ -7,7 +7,7 @@ import {
   fetchPublicationsPageAction,
   type PublicationItem,
 } from '@/lib/load_data/load_publications'
-import { PublicationCategory } from '@/lib/generated/prisma/enums'
+import { PublicationCategory } from '@/lib/enums'
 
 interface Props {
   category: PublicationCategory

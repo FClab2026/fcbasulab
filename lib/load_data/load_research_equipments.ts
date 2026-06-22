@@ -7,8 +7,8 @@ import { toHTML } from '@portabletext/to-html'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { SanityImageSource } from '@sanity/image-url'
 
-const RESEARCH_AREAS = groq`
-  *[_type == "researchArea"] | order(_createdAt asc) {
+const RESEARCH_EQUIPMENTS = groq`
+  *[_type == "researchEquipment"] | order(_createdAt asc) {
     "id": _id,
     name,
     body,
@@ -21,7 +21,7 @@ const RESEARCH_AREAS = groq`
 const ptToHtml = (blocks: PortableTextBlock[] | null | undefined) =>
   blocks && blocks.length ? toHTML(blocks) : ''
 
-export default async function fetchResearchAreas() {
+export default async function fetchResearchEquipments() {
   try {
     const rows = await client.fetch<
       {
@@ -32,7 +32,7 @@ export default async function fetchResearchAreas() {
         updatedAt: string
         createdAt: string
       }[]
-    >(RESEARCH_AREAS)
+    >(RESEARCH_EQUIPMENTS)
 
     return rows.map((r) => ({
       id: r.id,
@@ -43,7 +43,7 @@ export default async function fetchResearchAreas() {
       updatedAt: r.updatedAt,
     }))
   } catch (error) {
-    console.error('Error fetching researchAreas:', error)
+    console.error('Error fetching researchEquipments:', error)
     if (process.env.NODE_ENV !== 'production') throw error
     return null
   }

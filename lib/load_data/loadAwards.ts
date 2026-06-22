@@ -4,7 +4,7 @@ import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 import { toHTML } from "@portabletext/to-html";
 import type { PortableTextBlock } from "@portabletext/types";
-import { AwardType } from "@/lib/generated/prisma/enums";
+import { AwardType } from "@/lib/enums";
 
 const AWARDS_PAGE = groq`{
   "items": *[_type == "award" && (!defined($type) || type == $type)]

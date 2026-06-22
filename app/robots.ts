@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/", "/api/"],
+        disallow: ["/api/", "/studio/"],
       },
     ],
     sitemap: "https://chem-web.vercel.app/sitemap.xml",

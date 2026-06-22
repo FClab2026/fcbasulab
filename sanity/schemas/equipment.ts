@@ -1,21 +1,29 @@
 import {defineField, defineType} from 'sanity'
+import {richTextBody} from './richText'
+import {seoFields, seoGroup} from './seoFields'
 
 export default defineType({
-  name: 'equipment',
-  title: 'Equipment',
+  name: 'researchEquipment',
+  title: 'Research Equipment',
   type: 'document',
+  groups: [{name: 'content', title: 'Content', default: true}, seoGroup],
   fields: [
-    defineField({name: 'name', type: 'string', validation: (r) => r.required()}),
-    defineField({name: 'manufacturer', type: 'string', validation: (r) => r.required()}),
-    defineField({name: 'model', type: 'string', validation: (r) => r.required()}),
-    defineField({name: 'serialNumber', type: 'string', validation: (r) => r.required()}),
-    defineField({name: 'installedOn', type: 'datetime', validation: (r) => r.required()}),
-    defineField({name: 'category', type: 'string', validation: (r) => r.required()}),
+    defineField({name: 'name', type: 'string', validation: (r) => r.required(), group: 'content'}),
+    defineField({
+      name: 'body',
+      title: 'Body',
+      ...richTextBody,
+      validation: (r) => r.required(),
+      group: 'content',
+    }),
+    defineField({
+      name: 'image',
+      type: 'image',
+      options: {hotspot: true},
+      group: 'content',
+    }),
+    ...seoFields,
   ],
-  preview: {
-    select: {title: 'name', subtitle: 'manufacturer', category: 'category'},
-    prepare({title, subtitle, category}) {
-      return {title, subtitle: `${subtitle}${category ? ` · ${category}` : ''}`}
-    },
-  },
+  preview: {select: {title: 'name', media: 'image'}},
 })
+

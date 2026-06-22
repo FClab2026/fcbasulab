@@ -4,7 +4,7 @@ import { client } from '@/sanity/lib/client'
 import { groq } from 'next-sanity'
 import { toHTML } from '@portabletext/to-html'
 import type { PortableTextBlock } from '@portabletext/types'
-import { PublicationCategory } from '@/lib/generated/prisma/enums'
+import { PublicationCategory } from '@/lib/enums'
 
 export interface PublicationItem {
   id: string

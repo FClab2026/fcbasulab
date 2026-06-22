@@ -16,8 +16,8 @@ export const HOME_LATEST_PROJECTS = groq`
 `
 
 export const HOME_LATEST_EQUIPMENTS = groq`
-  *[_type == "equipment"] | order(installedOn desc)[0...$limit] {
-    "id": _id, name, manufacturer, model, serialNumber, installedOn, category
+  *[_type == "researchEquipment"] | order(_createdAt desc)[0...$limit] {
+    "id": _id, name, body, image, "createdAt": _createdAt, "updatedAt": _updatedAt
   }
 `
 
@@ -25,7 +25,7 @@ export const HOME_STATS = groq`{
   "publications": count(*[_type == "publication"]),
   "projects": count(*[_type == "project"]),
   "members": count(*[_type == "groupMember"]),
-  "equipments": count(*[_type == "equipment"]),
+  "equipments": count(*[_type == "researchEquipment"]),
   "alumni": count(*[_type == "alumni"]),
   "researchAreas": count(*[_type == "researchArea"])
 }`

@@ -1,4 +1,4 @@
-import { AwardType } from "@/lib/generated/prisma/enums";
+import { AwardType } from "@/lib/enums";
 import { fetchAwardsAction } from "@/lib/load_data/loadAwards";
 import { Timeline } from "@/components/pub/Timeline/Timeline";
 import { Metadata } from "next";

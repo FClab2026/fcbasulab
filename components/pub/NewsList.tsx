@@ -46,7 +46,7 @@ export const NewsList = ({ initialNews }: NewsListProps) => {
         {news.map((newsItem, index) => (
           <div 
             key={newsItem.id} 
-            className="transition-all hover:translate-y-[-4px] duration-300"
+            className="transition-all hover:translate-y-[-4px] duration-300 h-full flex"
           >
             <NewsCard 
               title={newsItem.title} 
