@@ -30,9 +30,10 @@ interface CategorySection {
 const MEMBERS_PER_SECTION = 15;
 
 const CATEGORY_ORDER: string[] = [
+  'LEADER',
+  'POSTDOC',
   'FACULTY',
   'FACULTY_FELLOW',
-  'POSTDOC',
   'PHD',
   'RESEARCH_SCHOLAR',
   'MASTERS',
@@ -44,6 +45,7 @@ const CATEGORY_ORDER: string[] = [
 ];
 
 const CATEGORY_DISPLAY: Record<string, string> = {
+  LEADER: 'Group Leader',
   POSTDOC: 'Postdoctoral Researchers',
   PHD: 'Doctoral Scholars',
   MASTERS: 'Masters Students',

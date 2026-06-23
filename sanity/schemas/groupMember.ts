@@ -2,6 +2,7 @@ import {defineField, defineType} from 'sanity'
 import {seoFields, seoGroup} from './seoFields'
 
 export const groupCategories = [
+  {title: 'Leader', value: 'LEADER'},
   {title: 'Postdoc', value: 'POSTDOC'},
   {title: 'PhD', value: 'PHD'},
   {title: 'Masters', value: 'MASTERS'},

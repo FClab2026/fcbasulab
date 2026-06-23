@@ -5,7 +5,7 @@ import CategorySection from './_components/CategorySection'
 
 export const revalidate = 3600
 
-const INITIAL_PAGE_SIZE = 10
+const INITIAL_PAGE_SIZE = 5
 
 const CATEGORY_LABELS: Record<PublicationCategory, string> = {
   JOURNAL: 'Journal Articles',

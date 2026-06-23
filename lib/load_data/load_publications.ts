@@ -81,7 +81,7 @@ export async function fetchAllCategoriesInitial(pageSize: number = 10): Promise<
 export async function fetchPublicationsPageAction(
   category: PublicationCategory,
   page: number,
-  pageSize: number = 10,
+  pageSize: number = 5,
 ): Promise<{ success: boolean; items: PublicationItem[]; total: number; hasMore: boolean }> {
   try {
     const { items, total } = await fetchCategoryPage(category, page, pageSize)

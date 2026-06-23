@@ -48,13 +48,13 @@ const ContactPage = () => {
 
             <div className="flex flex-col gap-3 max-w-md">
               <a
-                href="mailto:cssharma@che.iith.ac.in"
+                href="mailto:sbasu@chemical.iitd.ac.in"
                 className="block w-full text-center rounded-md bg-orange-500 hover:bg-orange-600 transition-colors text-white font-semibold py-3 px-4 shadow-sm"
               >
                 sbasu@chemical.iitd.ac.in
               </a>
               <a
-                href="mailto:carbonlabiith@gmail.com"
+                href="mailto:chemlabiitd@gmail.com"
                 className="block w-full text-center rounded-md bg-orange-500 hover:bg-orange-600 transition-colors text-white font-semibold py-3 px-4 shadow-sm"
               >
                 chemlabiitd@gmail.com

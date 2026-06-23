@@ -21,15 +21,15 @@ const navbarItems: NavbarItem[] = [
   {
     name: "Research",
     subNavbarItems: [
+      { name: "Research Projects", link: "/research/projects" },
       { name: "Research Areas", link: "/research/areas" },
       { name: "Research Facilities", link: "/research/facilities" },
-      { name: "Research Projects", link: "/research/projects" },
     ]
   },
   {
     name: "People",
     subNavbarItems: [
-      { name: "Team", link: "/people/team" },
+      { name: "Lab Group", link: "/people/team" },
       { name: "Alumni", link: "/people/alumni" },
     ]
   },

@@ -151,7 +151,7 @@ export default async function Home() {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-            {areas.slice(0, 6).map((item, index) => {
+            {areas.slice(0, 4).map((item, index) => {
               const plainDesc = truncate(stripHtml(item.body), 160)
               return (
                 <Reveal key={item.id} delay={index * 0.1} y={30}>

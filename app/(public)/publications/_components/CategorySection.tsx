@@ -33,7 +33,7 @@ const CategorySection = ({
   initialItems,
   initialTotal,
   initialHasMore,
-  pageSize = 10,
+  pageSize = 5,
 }: Props) => {
   const [items, setItems] = useState<PublicationItem[]>(initialItems)
   const [page, setPage] = useState(1)
