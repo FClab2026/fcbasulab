@@ -23,7 +23,7 @@ export interface CategoryGroup {
 
 const PUBLICATIONS_BY_CATEGORY = groq`{
   "items": *[_type == "publication" && category == $category]
-    | order(year desc, _createdAt desc)[$start...$end] {
+    | order(coalesce(year, 0) desc, _createdAt desc)[$start...$end] {
     "id": _id,
     body,
     category,
