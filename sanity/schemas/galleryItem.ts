@@ -5,8 +5,8 @@ export default defineType({
   title: 'Gallery Item',
   type: 'document',
   fields: [
-    defineField({name: 'title', type: 'string', validation: (r) => r.required()}),
-    defineField({name: 'description', type: 'text', rows: 3, validation: (r) => r.required()}),
+    defineField({name: 'title', type: 'string'}),
+    defineField({name: 'description', type: 'text', rows: 3}),
     defineField({
       name: 'image',
       type: 'image',

@@ -38,7 +38,7 @@ const Footer = () => {
           <h3 className="footer-col-heading">Contact</h3>
           <div className="footer-contact-item">
             <Phone className="footer-contact-icon" size={16} />
-            <span className="footer-contact-text">+91-(40) 2301 6208</span>
+            <span className="footer-contact-text">+91-(50) 3210 2068</span>
           </div>
           <div className="footer-contact-item">
             <Mail className="footer-contact-icon" size={16} />

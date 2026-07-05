@@ -81,6 +81,7 @@ export default async function Page() {
                     </div>
                 ) : (
                     <GalleryClient
+                    
                         initialGallery={galleryItems}
                         hasMoreInitial={hasMore}
                     />

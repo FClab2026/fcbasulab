@@ -12,6 +12,8 @@ import {
   fetchLatestEquipments,
 } from "@/lib/load_data/load_home";
 import fetchResearchAreas from "@/lib/load_data/load_research_areas";
+import fetchGalleryUrls from "@/lib/load_data/load_gallery_url";
+import GalleryCarousel from "@/components/pub/GalleryCarousel";
 
 export const revalidate = 0;
 
@@ -25,12 +27,13 @@ function truncate(s: string, n: number): string {
 }
 
 export default async function Home() {
-  const [stats, publications, projects, equipments, researchAreas] = await Promise.all([
+  const [stats, publications, projects, equipments, researchAreas,galleryUrls] = await Promise.all([
     fetchHomeStats(),
     fetchLatestPublications(4),
     fetchLatestProjects(2),
     fetchLatestEquipments(5),
     fetchResearchAreas(),
+    fetchGalleryUrls()
   ]);
   const areas = researchAreas || [];
   return (
@@ -258,6 +261,10 @@ export default async function Home() {
 
       {/* ═══ NEWS ═══ */}
       <NewsSection />
+
+
+      {/* ═══ Gallery  ═══ */}
+      <GalleryCarousel galleryUrls={galleryUrls} />
 
       {/* ═══ CTA ═══ */}
       <JoinUs />

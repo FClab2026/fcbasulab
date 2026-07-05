@@ -129,7 +129,7 @@ const GalleryClient = ({ initialGallery, hasMoreInitial }: GalleryClientProps) =
                                 <div className="relative aspect-4/3 overflow-hidden bg-slate-100">
                                     <Image
                                         src={imgUrl}
-                                        alt={item.title}
+                                        alt={item.title || 'Gallery Image'}
                                         fill
                                         loading={index < 3 ? 'eager' : 'lazy'}
                                         priority={index < 3}
