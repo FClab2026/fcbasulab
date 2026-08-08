@@ -55,12 +55,12 @@ const EquipmentCard = ({ item }: EquipmentCardProps) => {
             {plainDesc}
           </p>
         </div>
-        <Link
+        {/* <Link
           href={`/research/facilities#${item.id}`}
           className="inline-flex items-center text-xs font-semibold text-amber-700 hover:text-amber-800 transition-colors mt-4 group/btn"
         >
           View Details &rarr;
-        </Link>
+        </Link> */}
       </div>
     </div>
   )

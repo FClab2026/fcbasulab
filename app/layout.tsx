@@ -18,7 +18,7 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: "Chem Lab | IIT Delhi",
+  title: "FC-BASU Lab | IIT Delhi",
   description: "Advanced Chemical Research & Innovation at IIT Delhi",
 };
 

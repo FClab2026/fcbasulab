@@ -35,10 +35,11 @@ const navbarItems: NavbarItem[] = [
   },
   {
     name: "Awards",
-    subNavbarItems: [
-      { name: "Group Leader", link: "/awards/group-leader" },
-      { name: "Group Members", link: "/awards/group-members" },
-    ]
+    link: "/awards",
+    // subNavbarItems: [
+    //   { name: "Group Leader", link: "/awards/group-leader" },
+    //   { name: "Group Members", link: "/awards/group-members" },
+    // ]
   },
   { name: "Publications", link: "/publications" },
   {
@@ -155,7 +156,7 @@ const Navbar = () => {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-inner">
         <Link href="/" className="navbar-logo" onClick={closeMobile}>
-          Chemical Research Lab
+        FC-BASU Lab
         </Link>
 
         <ul className={`navbar-links ${mobileOpen ? 'mobile-open' : ''}`}>

@@ -91,7 +91,7 @@ const NewsSection = () => {
   const itemsToShow = news.slice(0, 6);
 
   return (
-    <section ref={sectionRef} className="section news-section">
+    <section ref={sectionRef} className="section news-section bg-white border-b border-slate-200/80">
       <div className="section-container">
         <div className="section-header-row">
           <div>

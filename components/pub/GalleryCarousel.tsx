@@ -38,16 +38,13 @@ const GalleryCarousel = ({ galleryUrls }: { galleryUrls: string[] }) => {
 
 
     return (
-        <section className="section" style={{ background: 'white' }}>
+        <section className="section bg-slate-50 border-t border-slate-200/80">
             <div className="section-container">
                 <Reveal>
                     <div className="section-header-row mb-10">
                         <div className="max-w-2xl">
                             <div className="section-label">OUR GALLERY</div>
                             <h2 className="section-heading">Moments That Define Our Journey</h2>
-                            <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                                Explore highlights from our research, academic events, laboratory activities, conferences, workshops, and achievements that reflect the vibrant life of our department.
-                            </p>
                         </div>
                         <Link href="/gallery" className="section-link self-end">
                             View all &rarr;

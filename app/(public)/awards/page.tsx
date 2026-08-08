@@ -6,13 +6,13 @@ import { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Group Member Awards | Chem Lab",
-  description: "Outstanding achievements and recognitions received by our research group members.",
+  title: "Group Leader Awards | Chem Lab",
+  description: "Recognitions and awards received by our group leader for excellence in chemical research and academic contributions.",
 };
 
-const GroupMemberAwardsPage = async () => {
+const AwardsPage = async () => {
   const result = await fetchAwardsAction({
-    type: AwardType.GROUP_MEMBER,
+    type: AwardType.GROUP_LEADER, // All awrds are of type GROUP_LEADER as earlier we have two types but now we have only one type of awards
     page: 1,
     pageSize: 20,
   });
@@ -24,7 +24,7 @@ const GroupMemberAwardsPage = async () => {
     <div className="min-h-screen bg-white">
       <div className="max-w-6xl mx-auto px-4 py-12">
         <h1 className="text-3xl md:text-4xl font-bold text-center mb-10">
-          Group Member Awards
+          Group Leader Awards
         </h1>
       </div>
 
@@ -32,7 +32,7 @@ const GroupMemberAwardsPage = async () => {
         <Timeline
           initialAwards={awards || []}
           initialHasMore={hasMore || false}
-          awardType={AwardType.GROUP_MEMBER}
+          awardType={AwardType.GROUP_LEADER}
           fetchAction={fetchAwardsAction}
         />
       </div>
@@ -40,4 +40,4 @@ const GroupMemberAwardsPage = async () => {
   );
 };
 
-export default GroupMemberAwardsPage;
+export default AwardsPage;

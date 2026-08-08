@@ -34,7 +34,7 @@ const CATEGORY_ORDER: PublicationCategory[] = [
 
 const SITE_TITLE = 'Publications | ChemLab'
 const SITE_DESCRIPTION =
-  'Peer-reviewed journal articles, conference proceedings, patents, books, and invited talks from the Chemical Research Lab at IIT Delhi.'
+  'Peer-reviewed journal articles, conference proceedings, patents, books, and invited talks from the Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab at IIT Delhi.'
 
 export const metadata: Metadata = {
   title: SITE_TITLE,

@@ -49,20 +49,17 @@ export default async function Home() {
               <span className="hero-badge-label">Department of Chemical Engineering &middot; IIT Delhi</span>
             </div>
           </HeroReveal>
-
+{/* Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab */}
           <HeroReveal delay={0.4} y={40} duration={1}>
             <h1 className="hero-title">
-              Advancing chemical sciences
-              <span className="hero-title-accent">through rigorous research.</span>
+              Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab
             </h1>
             <span className="hero-title-divider" />
           </HeroReveal>
 
           <HeroReveal delay={0.7}>
             <p className="hero-subtitle">
-              We pursue fundamental questions in catalysis, advanced materials, and sustainable
-              chemical processes, translating discoveries into applications that serve science
-              and society.
+              Committed to research towards electrochemical energy conversion technology, fabrication & testing of energy storage devices, precious material recovery from devices & their reuse under circular economy, and establishing new materials for electrochemical processing for value creation.
             </p>
           </HeroReveal>
 
@@ -101,7 +98,8 @@ export default async function Home() {
       </section>
 
       {/* ═══ ABOUT ═══ */}
-      <section className="section" style={{ background: 'white' }}>
+      {/* ! Section Removed to reduce vvertical scrolling */}
+      {/* <section className="section" style={{ background: 'white' }}>
         <div className="section-container">
           <div className="about-grid">
             <Reveal x={-40} y={0}>
@@ -136,10 +134,10 @@ export default async function Home() {
             </Reveal>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* ═══ RESEARCH AREAS ═══ */}
-      <section className="section" style={{ background: '#f8fafc', borderBottom: '1px solid rgba(15, 37, 87, 0.05)' }}>
+      {/* ═══ RESEARCH AREAS (Greyish) ═══ */}
+      <section className="section bg-slate-50 border-y border-slate-200/80">
         <div className="section-container">
           <Reveal>
             <div className="section-header-row">
@@ -153,66 +151,73 @@ export default async function Home() {
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-            {areas.slice(0, 4).map((item, index) => {
-              const plainDesc = truncate(stripHtml(item.body), 160)
-              return (
-                <Reveal key={item.id} delay={index * 0.1} y={30}>
-                  <div className="group relative flex flex-col bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all duration-300 h-full">
-                    {item.imgUrl ? (
-                      <div className="relative h-52 w-full overflow-hidden bg-slate-100">
-                        <img
-                          src={item.imgUrl}
-                          alt={item.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
-                      </div>
-                    ) : (
-                      <div className="relative h-52 w-full flex items-center justify-center bg-slate-50 border-b border-slate-100 text-slate-400">
-                        <span className="text-xs">No Image Available</span>
-                      </div>
-                    )}
-                    <div className="p-6 flex flex-col flex-1 justify-between">
-                      <div>
-                        <h3 className="text-xl font-serif font-bold text-slate-900 mb-3 group-hover:text-amber-700 transition-colors duration-200 line-clamp-1">
-                          {item.name}
-                        </h3>
-                        <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3">
-                          {plainDesc}
-                        </p>
-                      </div>
-                      <Link
-                        href={`/research/areas#${item.id}`}
-                        className="inline-flex items-center text-sm font-semibold text-amber-700 hover:text-amber-800 transition-colors mt-auto group/btn"
-                      >
-                        Read More
-                        <svg 
-                          className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1" 
-                          fill="none" 
-                          viewBox="0 0 24 24" 
-                          stroke="currentColor"
+          <div className="w-full overflow-hidden mt-10">
+            <InfiniteCarousel speed={35} gap={24}>
+              {areas.map((item) => {
+                const plainDesc = truncate(stripHtml(item.body), 140)
+                return (
+                  <div key={item.id} className="w-[350px] min-w-[350px] flex">
+                    <div className="group relative flex flex-col bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all duration-300 h-full w-full">
+                      {item.imgUrl ? (
+                        <div className="relative h-48 w-full overflow-hidden bg-slate-100 shrink-0">
+                          <img
+                            src={item.imgUrl}
+                            alt={item.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent" />
+                        </div>
+                      ) : (
+                        <div className="relative h-48 w-full flex items-center justify-center bg-slate-50 border-b border-slate-100 text-slate-400 shrink-0">
+                          <span className="text-xs">No Image Available</span>
+                        </div>
+                      )}
+                      <div className="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                          <h3 className="text-lg font-serif font-bold text-slate-900 mb-2 group-hover:text-amber-700 transition-colors duration-200 line-clamp-1" title={item.name}>
+                            {item.name}
+                          </h3>
+                          <p className="text-slate-600 text-xs leading-relaxed mb-6 line-clamp-3">
+                            {plainDesc}
+                          </p>
+                        </div>
+                        <Link
+                          href={`/research/areas#${item.id}`}
+                          className="inline-flex items-center text-xs font-semibold text-amber-700 hover:text-amber-800 transition-colors mt-auto group/btn"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </Link>
+                          Read More
+                          <svg 
+                            className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </Reveal>
-              )
-            })}
+                )
+              })}
+            </InfiniteCarousel>
           </div>
         </div>
       </section>
 
-      {/* ═══ RESEARCH & ANNOUNCEMENTS ═══ */}
-      <section className="section research-section overflow-hidden">
-        <div className="section-container ">
+      
+      
+      {/* ═══ NEWS (White) ═══ */}
+      <NewsSection />
+
+      {/* ═══ RESEARCH & ANNOUNCEMENTS (Greyish) ═══ */}
+      <section className="section research-section overflow-hidden bg-slate-50 border-y border-slate-200/80">
+        <div className="section-container">
           <Reveal>
             <div className="section-header-row">
               <div>
                 <div className="section-label">Latest Work</div>
-                <h2 className="section-heading">Research &amp; Announcements</h2>
+                <h2 className="section-heading">Research Outcome</h2>
               </div>
               <Link href="/research/areas" className="section-link">View all research &rarr;</Link>
             </div>
@@ -220,16 +225,12 @@ export default async function Home() {
           <div className="w-full overflow-hidden">
           <ResearchCards publications={publications} projects={projects} />
           </div>
-          <Reveal>
-            <div style={{ marginTop: 48 }}>
-              <Link href="/research/areas" className="explore-btn">Explore Research Areas</Link>
-            </div>
-          </Reveal>
         </div>
       </section>
 
-      {/* ═══ FACILITIES ═══ */}
-      <section className="section" style={{ background: 'white' }}>
+
+      {/* ═══ FACILITIES (White) ═══ */}
+      <section className="section bg-white border-b border-slate-200/80">
         <div className="section-container">
           <Reveal>
             <div className="section-header-row mb-10">
@@ -259,15 +260,13 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ═══ NEWS ═══ */}
-      <NewsSection />
 
 
       {/* ═══ Gallery  ═══ */}
       <GalleryCarousel galleryUrls={galleryUrls} />
 
       {/* ═══ CTA ═══ */}
-      <JoinUs />
+      {/* <JoinUs /> */}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import fetchGalleryAction from "@/lib/load_data/load_gallery"
 
 const SITE_TITLE = "Gallery | ChemLab"
 const SITE_DESCRIPTION =
-    "A visual record of our laboratory — research activities, experimental setups, events, and milestones from the Chemical Research Lab."
+    "A visual record of our laboratory — research activities, experimental setups, events, and milestones from the Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab."
 
 export const metadata: Metadata = {
     title: SITE_TITLE,
