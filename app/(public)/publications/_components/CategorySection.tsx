@@ -85,13 +85,13 @@ const CategorySection = ({
         <div>
           <div className="inline-flex items-center gap-3 mb-2">
             <span className="w-6 h-px bg-amber-700" aria-hidden="true" />
-            <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-amber-700">
+            <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-amber-700">
               Research Output
             </span>
           </div>
           <h2
             id={`publications-${category}`}
-            className="font-serif text-xl md:text-2xl text-slate-900 tracking-tight"
+            className="font-serif text-xl md:text-xl text-slate-900 tracking-tight"
           >
             {displayName}
           </h2>
@@ -102,7 +102,7 @@ const CategorySection = ({
       </header>
 
       {/* Timeline body */}
-      <div className="relative px-6 md:px-8 py-8 min-h-[200px]">
+      <div className="relative px-2 md:px-2 py-4 min-h-[200px]">
         <AnimatePresence mode="wait" initial={false}>
           <motion.ol
             key={page}
@@ -136,19 +136,41 @@ const CategorySection = ({
                   />
                   <time
                     dateTime={String(item.year ?? new Date(item.createdAt).getFullYear())}
-                    className="block text-right pr-5 font-serif text-base md:text-lg text-slate-900 tabular-nums leading-tight mt-0.5"
+                    className="block text-right pr-5 font-serif text-sm text-slate-900 tabular-nums leading-tight mt-0.5"
                   >
                     {getYearLabel(item)}
                   </time>
                 </div>
 
                 {/* Right: HTML body */}
-                <article
-                  className="prose prose-sm md:prose-base max-w-none text-slate-700 leading-relaxed
+                {/* <article
+                  className="text-sm prose prose-sm md:prose-base max-w-none text-slate-700 leading-relaxed
                              prose-p:my-0 prose-p:leading-relaxed
                              prose-a:text-amber-700 prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-2
                              prose-strong:text-slate-900
                              prose-em:text-slate-900"
+                  dangerouslySetInnerHTML={{ __html: item.body }}
+                /> */}
+                <article
+                  className="
+                  prose prose-sm
+                  max-w-none
+                  text-sm
+                  text-slate-700
+                  leading-relaxed
+
+                  prose-p:text-sm
+                  prose-p:my-0
+                  prose-p:leading-relaxed
+
+                  prose-a:text-blue-600
+                  prose-a:no-underline
+                  hover:prose-a:underline
+                  prose-a:underline-offset-2
+
+                  prose-strong:text-slate-900
+                  prose-em:text-slate-900
+                "
                   dangerouslySetInnerHTML={{ __html: item.body }}
                 />
               </motion.li>

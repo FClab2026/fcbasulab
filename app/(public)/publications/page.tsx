@@ -107,13 +107,14 @@ export default async function PublicationsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-10">
+      <div className="max-w-6xl mx-auto p-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-center mb-6">
           Publications
         </h1>
       </div>
 
-      <main className="max-w-5xl mx-auto px-6 md:px-10 pb-16 md:pb-20 space-y-10 md:space-y-12">
+      {/* <main className="max-w-5xl mx-auto px-6 md:px-10 pb-16 md:pb-20 space-y-10 md:space-y-12"> */}
+      <main className="px-8 mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 pb-14">
         {orderedGroups.length === 0 ? (
           <div className="text-center py-24 text-slate-400 text-sm">
             No publications recorded yet.
