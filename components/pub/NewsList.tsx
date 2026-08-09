@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { NewsCard } from '@/components/pub/newsCard'
-import { fetchNewsAction } from '@/lib/news'
+import { fetchNewsAction } from '@/lib/load_data/loadNews'
 import { Button } from '@/components/ui/button'
 
 interface NewsAndAnnouncements {

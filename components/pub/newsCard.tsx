@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { fetchNewsAction } from '@/lib/news';
+import { fetchNewsAction } from '@/lib/load_data/loadNews';
 import InfiniteCarousel from '@/components/pub/InfiniteCarousel';
 
 interface NewsCardProps {

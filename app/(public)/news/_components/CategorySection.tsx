@@ -3,18 +3,13 @@
 import { useCallback, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
-import {
-  fetchPublicationsPageAction,
-  type PublicationItem,
-} from '@/lib/load_data/load_publications'
-import { AwardType } from '@/lib/enums'
-import { fetchAwardsAction, type AwardItem } from "@/lib/load_data/loadAwards";
-
+import { fetchNewsPageAction, type NewsItem } from "@/lib/load_data/loadNews";
+import { NewsAndAnnouncementsType } from '@/lib/enums'
 
 interface Props {
-  category: AwardType
+  type: NewsAndAnnouncementsType
   displayName: string
-  initialItems: AwardItem[]
+  initialItems: NewsItem[]
   itemsTotal: number
   initialHasMore: boolean
   pageSize?: number
@@ -29,14 +24,14 @@ const ROW_HEIGHT_PX = 64
 
 
 const CategorySection = ({
-  category,
+  type,
   displayName,
   initialItems,
   itemsTotal,
   initialHasMore,
   pageSize = 5,
 }: Props) => {
-  const [items, setItems] = useState<AwardItem[]>(initialItems)
+  const [items, setItems] = useState<NewsItem[]>(initialItems)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(itemsTotal)
   const [hasMore, setHasMore] = useState(initialHasMore)
@@ -58,35 +53,35 @@ const CategorySection = ({
       setLoading(true)
       try {
         // console.log(`Fetching awards for category: ${category}, page: ${targetPage}, pageSize: ${pageSize}`);
-        const result = await fetchAwardsAction({
-          type: category,
-          page: targetPage,
+        const result = await fetchNewsPageAction(
+          type,
+          targetPage,
           pageSize,
-        }
+
         )
 
 
-        if (result.success && result.data) {
-          setItems(result.data)
+        if (result.success && result.items) {
+          setItems(result.items)
           setPage(targetPage)
           setTotal(result.total)
           setHasMore(result.hasMore)
         }
       } catch (err) {
-        console.error(`Failed to load page ${targetPage} for ${category}:`, err)
+        console.error(`Failed to load page ${targetPage} for ${type}:`, err)
       } finally {
         loadingRef.current = false
         setLoading(false)
       }
     },
-    [category, pageSize, totalPages]
+    [type, pageSize, totalPages]
   )
 
   if (initialItems.length === 0) return null
 
   return (
     <section
-      aria-labelledby={`publications-${category}`}
+      aria-labelledby={`publications-${type}`}
       className="bg-[#f8fafc] border border-slate-200/70 rounded-sm overflow-hidden"
     >
       {/* Box header — tightened */}
@@ -95,11 +90,11 @@ const CategorySection = ({
           <div className="inline-flex items-center gap-2.5 mb-1">
             <span className="w-5 h-px bg-amber-700" aria-hidden="true" />
             <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-amber-700">
-              Awards
+              News & Announcements
             </span>
           </div>
           <h2
-            id={`publications-${category}`}
+            id={`publications-${type}`}
             className="font-serif text-lg text-slate-900 tracking-tight leading-tight"
           >
             {displayName}
@@ -143,24 +138,22 @@ const CategorySection = ({
                 <div className="flex items-start gap-1">
 
                   <span
-                    className="shrink-0 w-4 text-slate-400 tabular-nums text-[11px] font-medium"
+                  className="shrink-0 w-4 text-slate-400 tabular-nums text-[11px] font-medium"
                   >{index + 1}.</span>
-
 
                   <article
                     className="
-                        prose prose-sm max-w-none inline
-                        text-[13px] text-slate-600 leading-snug
-                        prose-p:inline prose-p:m-0 prose-p:text-[13px]
-                        prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-2
-                        prose-strong:text-slate-900
-                        prose-em:text-slate-900
-                      "
+                  prose prose-sm max-w-none inline
+                  text-[13px] text-slate-600 leading-snug
+                  prose-p:inline prose-p:m-0 prose-p:text-[13px]
+                  prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-2
+                  prose-strong:text-slate-900
+                  prose-em:text-slate-900
+                  "
                     dangerouslySetInnerHTML={{ __html: item.body }}
                   />
 
                 </div>
-
               </motion.li>
             ))}
           </motion.ol>

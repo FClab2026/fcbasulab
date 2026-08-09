@@ -85,18 +85,18 @@ const CategorySection = ({
         <div>
           <div className="inline-flex items-center gap-3 mb-2">
             <span className="w-6 h-px bg-amber-700" aria-hidden="true" />
-            <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-amber-700">
+            <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-amber-700">
               Research Output
             </span>
           </div>
           <h2
             id={`publications-${category}`}
-            className="font-serif text-xl md:text-xl text-slate-900 tracking-tight"
+            className="font-serif text-lg md:text-xl text-slate-900 tracking-tight"
           >
             {displayName}
           </h2>
         </div>
-        <div className="text-xs md:text-sm text-slate-400 whitespace-nowrap tabular-nums">
+        <div className="text-xs text-slate-400 whitespace-nowrap tabular-nums">
           {total.toLocaleString()} total
         </div>
       </header>
