@@ -80,7 +80,7 @@ export async function fetchNewsAction({
   page = 1,
   pageSize = 10,
 }: {
-  type: NewsAndAnnouncementsType
+  type?: NewsAndAnnouncementsType
   page?: number
   pageSize?: number
 }) {
@@ -117,6 +117,51 @@ export async function fetchNewsAction({
     }
   }
 }
+
+export async function fetchNewsActionSerialized({
+  type,
+  page = 1,
+  pageSize = 10,
+}: {
+  type?: NewsAndAnnouncementsType
+  page?: number
+  pageSize?: number
+}) {
+  try {
+    const start = (page - 1) * pageSize
+    const end = start + pageSize
+    const result = await client.fetch<{
+      items: {
+        id: string
+        title: string
+        body: PortableTextBlock[]
+        type: NewsAndAnnouncementsType
+        updatedAt: string
+        createdAt: string
+      }[]
+      total: number
+    }>(NEWS_PAGE, { start, end, type: type ?? null })
+
+    return {
+      success: true,
+      items: serialize(result.items),
+      total: result.total,
+      hasMore: result.total > end,
+    }
+  } catch (error) {
+    console.error('Error fetching news:', error)
+    if (process.env.NODE_ENV !== 'production') throw error
+    return {
+      success: false,
+      items: [],
+      total: 0,
+      hasMore: false,
+      error: 'Failed to fetch news',
+    }
+  }
+}
+
+
 
 
 export async function fetchNewsPageAction(

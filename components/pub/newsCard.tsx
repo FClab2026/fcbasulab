@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { fetchNewsAction } from '@/lib/load_data/loadNews';
+import { fetchNewsActionSerialized } from '@/lib/load_data/loadNews';
 import InfiniteCarousel from '@/components/pub/InfiniteCarousel';
 
 interface NewsCardProps {
@@ -63,12 +63,12 @@ const NewsSection = () => {
         if (entries[0].isIntersecting && !hasLoaded && !loading) {
           setLoading(true);
           try {
-            const result = await fetchNewsAction({
+            const result = await fetchNewsActionSerialized({
               page: 1,
               pageSize: 6,
             });
             if (result.success) {
-              setNews(result.data);
+              setNews(result.items);
               setHasLoaded(true);
             }
           } catch (error) {
