@@ -1,43 +1,9 @@
-import { AwardType } from "@/lib/enums";
-import { fetchAwardsAction } from "@/lib/load_data/loadAwards";
-import { Timeline } from "@/components/pub/Timeline/Timeline";
-import { Metadata } from "next";
+import { redirect } from 'next/navigation'
 
-export const dynamic = "force-dynamic";
-
-export const metadata: Metadata = {
-  title: "Group Leader Awards | Chem Lab",
-  description: "Recognitions and awards received by our group leader for excellence in chemical research and academic contributions.",
-};
-
-const AwardsPage = async () => {
-  const result = await fetchAwardsAction({
-    type: AwardType.GROUP_LEADER, // All awrds are of type GROUP_LEADER as earlier we have two types but now we have only one type of awards
-    page: 1,
-    pageSize: 20,
-  });
-
-  const awards = result.success ? result.data : [];
-  const hasMore = result.hasMore;
-
+const page = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-6xl mx-auto p-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-center py-4">
-          Group Leader Awards
-        </h1>
-      </div>
+   redirect('/awards/group-leader')
+  )
+}
 
-      <div className="max-w-5xl mx-auto px-4 md:px-10 pb-8">
-        <Timeline
-          initialAwards={awards || []}
-          initialHasMore={hasMore || false}
-          awardType={AwardType.GROUP_LEADER}
-          fetchAction={fetchAwardsAction}
-        />
-      </div>
-    </div>
-  );
-};
-
-export default AwardsPage;
+export default page

@@ -4,14 +4,13 @@ import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 import { toHTML } from "@portabletext/to-html";
 import type { PortableTextBlock } from "@portabletext/types";
-import type { AlumniCategory,alumniCategories } from "@/sanity/schemas/alumni";
+import { alumniCategories, type AlumniCategory } from "@/lib/enums"
 
 const ALUMNI_PAGE = groq`
 {
   "items": *[
     _type == "alumni"
     && category == $category
-    && year == $year
   ]
   | order(year desc, name asc)
   [$start...$end] {
@@ -27,10 +26,31 @@ const ALUMNI_PAGE = groq`
   "total": count(*[
     _type == "alumni"
     && category == $category
-    && year == $year
   ])
 }
 `;
+
+export type AlumniItem = {
+  id: string;
+  name: string;
+  body: string;
+  year: number;
+  category: string;
+  updatedAt: string;
+  createdAt: string;
+}
+
+type AlumniWithPortableText = Omit<AlumniItem, "body"> & {
+  body: PortableTextBlock[];
+};
+
+
+export interface CategoryGroup {
+  category: AlumniCategory
+  items: AlumniItem[]
+  total: number
+  hasMore: boolean
+}
 
 const ptToHtml = (
   blocks: PortableTextBlock[] | null | undefined
@@ -39,14 +59,48 @@ const ptToHtml = (
     ? toHTML(blocks)
     : "";
 
-export async function fetchAlumniAction({
+
+const serialize = (rows: AlumniWithPortableText[]): AlumniItem[] =>
+  rows.map((r) => ({
+
+    id: r.id,
+    name: r.name,
+    body: ptToHtml(r.body),
+    year: r.year,
+    category: r.category,
+    updatedAt: r.updatedAt,
+    createdAt: r.createdAt,
+
+  }))
+
+export async function fetchAllCategoriesInitial(pageSize: number = 10): Promise<CategoryGroup[]> {
+  const categories = alumniCategories.map((cat) => cat.value as AlumniCategory)
+  const results = await Promise.all(
+    categories.map(async (category) => {
+      const { items, total } = await fetchCategoryPage({
+        category,
+        page: 1,
+        pageSize,
+      })
+      return {
+        category,
+        items: serialize(items),
+        total,
+        hasMore: total > pageSize,
+      } satisfies CategoryGroup
+    }),
+  )
+  return results
+}
+
+
+
+export async function fetchCategoryPage({
   category,
-  year,
   page = 1,
   pageSize = 20,
 }: {
   category: AlumniCategory;
-  year: number;
   page?: number;
   pageSize?: number;
 }) {
@@ -55,58 +109,41 @@ export async function fetchAlumniAction({
 
   console.log("[fetchAlumniAction] querying Sanity", {
     category,
-    year,
     start,
     end,
   });
 
   const result = await client.fetch<{
-    items: {
-      id: string;
-      name: string;
-      body: PortableTextBlock[];
-      year: number;
-      category: string;
-      updatedAt: string;
-      createdAt: string;
-    }[];
+    items: AlumniWithPortableText[];
     total: number;
   }>(
     ALUMNI_PAGE,
     {
       category,
-      year,
       start,
       end,
     }
   );
+  return result
+}
 
-  console.log(
-    "[fetchAlumniAction] raw result",
-    JSON.stringify(result).slice(0, 500)
-  );
 
-  const items = result.items ?? [];
-
-  const data = items.map((it) => ({
-    id: it.id,
-    name: it.name,
-    body: ptToHtml(it.body),
-    year: it.year,
-    category: it.category,
-    updatedAt: it.updatedAt,
-    createdAt: it.createdAt,
-  }));
-
-  const total = result.total ?? 0;
-
-  return {
-    success: true,
-    data,
-    total,
-    page,
-    pageSize,
-    hasMore: total > start + data.length,
-    totalPages: Math.ceil(total / pageSize),
-  };
+export async function fetchAlumniPageAction(
+  category: AlumniCategory,
+  page: number,
+  pageSize: number = 5,
+): Promise<{ success: boolean; items: AlumniItem[]; total: number; hasMore: boolean }> {
+  try {
+    const { items, total } = await fetchCategoryPage({ category, page, pageSize })
+    return {
+      success: true,
+      items: serialize(items),
+      total,
+      hasMore: total > page * pageSize,
+    }
+  } catch (err) {
+    console.error('Failed to fetch publications page:', err)
+    if (process.env.NODE_ENV !== 'production') throw err
+    return { success: false, items: [], total: 0, hasMore: false }
+  }
 }

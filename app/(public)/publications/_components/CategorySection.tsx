@@ -78,7 +78,7 @@ const CategorySection = ({
   return (
     <section
       aria-labelledby={`publications-${category}`}
-      className="bg-white border border-slate-200/70 rounded-sm overflow-hidden"
+      className="bg-[#f8fafc] border border-slate-200/70 rounded-sm overflow-hidden"
     >
       {/* Box header */}
       <header className="flex items-end justify-between gap-6 px-6 md:px-8 pt-7 md:pt-8 pb-5 border-b border-slate-200/70">

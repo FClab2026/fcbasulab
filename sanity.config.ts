@@ -4,6 +4,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './sanity/schemas'
 import {apiVersion, dataset, projectId} from './sanity/env'
 import BulkGalleryUpload from './sanity/tools/BulkGalleryUpload'
+import BulkAwardGalleryUpload from './sanity/tools/BulkAwardGalleryUpload '
 import {UploadIcon} from '@sanity/icons'
 
 export default defineConfig({
@@ -20,6 +21,12 @@ export default defineConfig({
       name: "bulk-gallery",
       title: "Bulk Gallery Upload",
       component: BulkGalleryUpload,
+      icon: UploadIcon
+    },
+    {
+      name: "bulk-award-gallery",
+      title: "Bulk Award Gallery Upload",
+      component: BulkAwardGalleryUpload,
       icon: UploadIcon
     }
   ]

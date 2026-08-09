@@ -21,12 +21,22 @@ const AWARDS_PAGE = groq`{
 const ptToHtml = (blocks: PortableTextBlock[] | null | undefined) =>
   blocks && blocks.length ? toHTML(blocks) : "";
 
+
+export type AwardItem = {
+  id: string;
+  body: string;
+  type: AwardType;
+  updatedAt: string;
+  createdAt: string;
+};
+
+
 export async function fetchAwardsAction({
   type,
   page = 1,
   pageSize = 10,
 }: {
-  type?: AwardType;
+  type: AwardType;
   page?: number;
   pageSize?: number;
 }) {

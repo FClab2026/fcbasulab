@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { TimelineItem } from "./TimelineItem";
 import { Loader2 } from "lucide-react";
-import {type  AlumniCategory,alumniCategories} from "@/sanity/schemas/alumni";
+import {type  AlumniCategory,alumniCategories} from "@/lib/enums";
 
 interface TimelineProps {
   initialAwards: any[];

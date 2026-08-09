@@ -35,11 +35,10 @@ const navbarItems: NavbarItem[] = [
   },
   {
     name: "Awards",
-    link: "/awards",
-    // subNavbarItems: [
-    //   { name: "Group Leader", link: "/awards/group-leader" },
-    //   { name: "Group Members", link: "/awards/group-members" },
-    // ]
+    subNavbarItems: [
+      { name: "Group Leader", link: "/awards/group-leader" },
+      { name: "Group Members", link: "/awards/group-members" },
+    ]
   },
   { name: "Publications", link: "/publications" },
   {

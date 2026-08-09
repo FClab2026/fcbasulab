@@ -32,6 +32,20 @@ export const GroupCategory = {
 } as const
 export type GroupCategory = (typeof GroupCategory)[keyof typeof GroupCategory]
 
+
+export const alumniCategories = [
+  {title: 'Postdoc', value: 'POSTDOC'},
+  {title: 'PhD', value: 'PHD'},
+  {title: 'Masters', value: 'MASTERS'},
+  {title: 'DualDegree', value: 'DUAL_DEGREE'},
+  {title: 'Undergraduate', value: 'UNDERGRADUATE'},
+  {title: 'Faculty', value: 'FACULTY'},
+  {title: 'Other', value: 'OTHER'},
+] as const
+
+export type AlumniCategory = typeof alumniCategories[number]['value']
+
+
 export const AwardType = {
   GROUP_LEADER: 'GROUP_LEADER',
   GROUP_MEMBER: 'GROUP_MEMBER',

@@ -1,19 +1,7 @@
 import {defineField, defineType} from 'sanity'
 import {richTextBody} from './richText'
+import {alumniCategories} from "@/lib/enums"
 
-
-
-export const alumniCategories = [
-  {title: 'Postdoc', value: 'POSTDOC'},
-  {title: 'PhD', value: 'PHD'},
-  {title: 'Masters', value: 'MASTERS'},
-  {title: 'DualDegree', value: 'DUAL_DEGREE'},
-  {title: 'Undergraduate', value: 'UNDERGRADUATE'},
-  {title: 'Faculty', value: 'FACULTY'},
-  {title: 'Other', value: 'OTHER'},
-] as const
-
-export type AlumniCategory = typeof alumniCategories[number]['value']
 
 export default defineType({
   name: 'alumni',

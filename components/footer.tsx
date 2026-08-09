@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Phone, Mail, MapPin } from "lucide-react"
 import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa"
 import { IoLogoLinkedin } from "react-icons/io5"
-
+import { FiExternalLink } from "react-icons/fi";
 const Footer = () => {
   return (
     <footer className="site-footer">
@@ -13,17 +13,21 @@ const Footer = () => {
           <p className="footer-tagline">Fuel Cell, Battery Application & Sustainable-Energy Utilisation &middot; IIT Delhi</p>
 
           {/* Removed if required uncomment */}
-          {/* <p className="footer-desc">Please follow our social media pages for more updates.</p>
           <div className="footer-socials">
-            <a href="https://www.facebook.com/Suddhsaatwa.Basu" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            {/* <a href="https://www.facebook.com/Suddhsaatwa.Basu" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <span className="footer-social-icon"><FaFacebook /></span>
             </a>
             <a href="https://www.linkedin.com/in/suddhasatwa-basu-fnasc-fnae-frsc-5998882b/" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
             <span className="footer-social-icon"><FaTwitter /></span>
-            </a>
+            </a> */}
 
-            <span className="footer-social-icon"><IoLogoLinkedin /></span>
-          </div> */}
+            <a href="https://www.linkedin.com/in/suddhasatwa-basu-fnasc-fnae-frsc-5998882b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <span className="footer-social-icon"><IoLogoLinkedin size={16} /></span>
+            </a>
+            <a href="https://www.h2dc12avenue.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <span className="footer-social-icon"><FiExternalLink size={16}/></span>
+            </a>
+          </div>
         </div>
 
         {/* Col 2: Links (2 Columns) */}
@@ -46,15 +50,15 @@ const Footer = () => {
           <h3 className="footer-col-heading">Contact</h3>
           <div className="footer-contact-item">
             <Phone className="footer-contact-icon" size={16} />
-            <span className="footer-contact-text">+91-(50) 3210 2068</span>
+            <span className="footer-contact-text">+91 - 783 813 4181</span>
           </div>
           <div className="footer-contact-item">
             <Mail className="footer-contact-icon" size={16} />
-            <span className="footer-contact-text">chemlabiitd@gmail.com</span>
+            <span className="footer-contact-text">sbasu@chemical.iitd.ac.in, </span>
           </div>
           <div className="footer-contact-item">
             <MapPin className="footer-contact-icon" size={16} />
-            <span className="footer-contact-text">Dept. of Chemical Engineering, IIT Delhi</span>
+            <span className="footer-contact-text">Block-1 A234, IIT Delhi</span>
           </div>
         </div>
 
@@ -71,7 +75,7 @@ const Footer = () => {
             />
           </div>
           <a
-            href="https://www.google.com/maps/dir/?api=1&destination=Indian+Institute+of+Technology+Delhi,+Hauz+Khas,+New+Delhi"
+            href="https://maps.app.goo.gl/yr1uNrdQKtUmjy7N9"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-map-link"

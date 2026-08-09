@@ -7,6 +7,7 @@ import award from './award'
 import alumni from './alumni'
 import news from './news'
 import galleryItem from './galleryItem'
+import awardGalleryItem from './awardGalleryItem'
 
 export const schemaTypes = [
   publication,
@@ -18,4 +19,5 @@ export const schemaTypes = [
   alumni,
   news,
   galleryItem,
+  awardGalleryItem
 ]

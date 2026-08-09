@@ -8,12 +8,11 @@ export default defineType({
   type: 'document',
   groups: [{name: 'content', title: 'Content', default: true}, seoGroup],
   fields: [
-    defineField({name: 'name', type: 'string', validation: (r) => r.required(), group: 'content'}),
+    defineField({name: 'name', type: 'string', group: 'content'}),
     defineField({
       name: 'body',
       title: 'Body',
       ...richTextBody,
-      validation: (r) => r.required(),
       group: 'content',
     }),
     defineField({

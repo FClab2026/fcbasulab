@@ -6,8 +6,8 @@ import Link from 'next/link'
 interface EquipmentCardProps {
   item: {
     id: string
-    name: string
-    body: string
+    name: string | null
+    body: string | null
     imgUrl: string | null
   }
 }
@@ -22,18 +22,18 @@ function truncate(s: string, n: number): string {
 }
 
 const EquipmentCard = ({ item }: EquipmentCardProps) => {
-  const plainDesc = truncate(stripHtml(item.body), 120)
+  const plainDesc = item.body && truncate(stripHtml(item.body), 120)
 
   return (
-    <div 
-      id={item.id} 
+    <div
+      id={item.id}
       className="group/eqcard relative flex flex-col bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all duration-300 h-full w-full scroll-mt-24"
     >
       {item.imgUrl ? (
         <div className="relative h-48 w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <img
             src={item.imgUrl}
-            alt={item.name}
+            alt={item.name ?? 'Equipment Image'}
             className="w-full h-full object-cover group-hover/eqcard:scale-105 transition-transform duration-500"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent" />
@@ -45,12 +45,15 @@ const EquipmentCard = ({ item }: EquipmentCardProps) => {
       )}
       <div className="p-5 flex flex-col flex-1 justify-between">
         <div>
-          <h3 
-            className="text-base font-bold text-slate-950 mb-2 line-clamp-2 leading-snug group-hover/eqcard:text-amber-700 transition-colors duration-200" 
-            title={item.name}
-          >
-            {item.name}
-          </h3>
+          {
+            item.name &&
+            <h3
+              className="text-base font-bold text-slate-950 mb-2 line-clamp-2 leading-snug group-hover/eqcard:text-amber-700 transition-colors duration-200"
+              title={item.name}
+            >
+              {item.name}
+            </h3>
+          }
           <p className="text-slate-600 text-xs leading-relaxed line-clamp-3">
             {plainDesc}
           </p>

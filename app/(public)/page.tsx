@@ -67,7 +67,7 @@ export default async function Home() {
             </p>
           </HeroReveal>
 
-          <HeroReveal delay={0.9}>
+          {/* <HeroReveal delay={0.9}>
             <div className="hero-buttons">
               <Link href="/research/areas" className="hero-btn-primary">
                 Explore Research
@@ -76,7 +76,7 @@ export default async function Home() {
                 View Publications
               </Link>
             </div>
-          </HeroReveal>
+          </HeroReveal> */}
         </div>
 
         <div className="hero-scroll-indicator">
