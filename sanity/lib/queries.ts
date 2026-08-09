@@ -41,7 +41,7 @@ export const PUBLICATIONS_BY_CATEGORY = groq`{
 export const MEMBERS_BY_CATEGORY = groq`{
   "items": *[_type == "groupMember" && category == $category]
     | order(name asc)[$start...$end] {
-    "id": _id, name, email, designation, researchAreas, category,
+    "id": _id, name, email, designation, researchAreas, category,description,
     profileImage, profileLink, phoneNumber
   },
   "total": count(*[_type == "groupMember" && category == $category])

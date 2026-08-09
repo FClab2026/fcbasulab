@@ -5,8 +5,18 @@ import { urlFor } from '@/sanity/lib/image';
 import { MEMBERS_BY_CATEGORY } from '@/sanity/lib/queries';
 import { GroupCategory } from '@/lib/enums';
 import type { SanityImageSource } from '@sanity/image-url';
+import { toHTML } from "@portabletext/to-html";
+import type { PortableTextBlock } from "@portabletext/types";
 
 const MEMBERS_PER_SECTION = 15;
+
+const ptToHtml = (
+  blocks: PortableTextBlock[] | null | undefined
+) =>
+  blocks && blocks.length
+    ? toHTML(blocks)
+    : "";
+
 
 export async function fetchMembersByCategory(category: GroupCategory, page: number = 1) {
   try {
@@ -18,6 +28,7 @@ export async function fetchMembersByCategory(category: GroupCategory, page: numb
         id: string;
         name: string;
         email: string;
+        description?: PortableTextBlock[] | null;
         researchAreas: string | null;
         designation: string | null;
         category: GroupCategory;
@@ -34,6 +45,7 @@ export async function fetchMembersByCategory(category: GroupCategory, page: numb
         id: m.id,
         name: m.name,
         email: m.email,
+        description: ptToHtml(m.description) || '',
         researchAreas: m.researchAreas || '',
         designation: m.designation,
         category: m.category,

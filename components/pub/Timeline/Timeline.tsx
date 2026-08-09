@@ -3,12 +3,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { TimelineItem } from "./TimelineItem";
 import { Loader2 } from "lucide-react";
+import {type  AlumniCategory,alumniCategories} from "@/sanity/schemas/alumni";
 
 interface TimelineProps {
   initialAwards: any[];
   initialHasMore: boolean;
   awardType: any;
-  fetchAction: (params: { page: number; pageSize: number; type?: any }) => Promise<any>;
+  fetchAction: (params: { page: number; pageSize: number; category:AlumniCategory,year:number }) => Promise<any>;
   showDate?: boolean;
 }
 
@@ -39,7 +40,8 @@ export const Timeline = ({
     setLoading(true);
     try {
       const result = await fetchAction({
-        type: awardType,
+        category: alumniCategories[0].value,
+        year: 2023,
         page,
         pageSize: PAGE_SIZE,
       });

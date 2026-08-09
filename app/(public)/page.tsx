@@ -40,7 +40,11 @@ export default async function Home() {
     <div className="relative">
       {/* ═══ HERO ═══ */}
       <section className="hero">
-        <div className="hero-bg" style={{ backgroundImage: 'url("/hero2.jpg")' }} />
+        <div className="hero-bg" 
+        style={{ backgroundImage: 
+        'url("/hero3.png")' }} 
+        // 'url("/hero2.jpg")' }} 
+        />
         <div className="hero-overlay" />
 
         <div className="hero-content">

@@ -6,6 +6,7 @@ interface GroupMember {
   id: string;
   name: string;
   email: string;
+  description: string | null;
   researchAreas: string;
   designation: string | null;
   category: string;

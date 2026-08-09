@@ -11,6 +11,7 @@ interface Member {
   id: string;
   name: string;
   email: string;
+  description: string | null;
   researchAreas: string;
   designation: string | null;
   category: string;
@@ -172,13 +173,13 @@ const PeoplePage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-10">
+      <div className="max-w-6xl mx-auto p-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-center">
           The Research Group
         </h1>
       </div>
 
-      <main className="max-w-7xl mx-auto px-6 md:px-10 pb-16 md:pb-20 space-y-20 md:space-y-24">
+      <main className="max-w-7xl mx-auto px-6 md:px-10 pb-16 md:pb-20 space-y-20 md:space-y-14">
         {CATEGORY_ORDER.map((category) => {
           const section = sections.get(category);
           if (!section) return null;
@@ -193,9 +194,9 @@ const PeoplePage = () => {
               data-category={category}
               aria-labelledby={`section-${category}`}
             >
-              <div className="flex items-end justify-between gap-6 mb-10 md:mb-12 pb-5 border-b border-slate-200">
+              <div className="flex items-end justify-between gap-3 mb-8 md:mb-8 pb-3 border-b border-slate-200">
                 <div>
-                  <div className="inline-flex items-center gap-3 mb-3">
+                  <div className="inline-flex items-center gap-2 mb-2">
                     <span className="w-6 h-px bg-amber-700" aria-hidden="true" />
                     <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-amber-700">
                       Members
@@ -218,24 +219,60 @@ const PeoplePage = () => {
 
               {isInView && section.members.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-                    {section.members.map((member, index) => (
-                      <motion.div
-                        key={member.id}
-                        initial={{ opacity: 0, y: 16 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '-40px' }}
-                        transition={{
-                          duration: 0.4,
-                          delay: Math.min((index % 8) * 0.04, 0.28),
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                      >
-                        <PublicGroupMemberCard member={member} />
-                      </motion.div>
-                    ))}
-                  </div>
+                  {
+                    category === 'LEADER' ?
+                      <div className="flex flex-col gap-3 md:gap-4 mb-8">
+                        {
+                          section.members.map((member, index) => (
+                            <div key={index} className='w-full gap-2 md:flex md:flex-row md:justify-between md:items-start md:gap-6' >
+                              <motion.div
+                                key={member.id}
+                                initial={{ opacity: 0, y: 16 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-40px' }}
+                                transition={{
+                                  duration: 0.4,
+                                  delay: Math.min((index % 8) * 0.04, 0.28),
+                                  ease: [0.22, 1, 0.36, 1],
+                                }}
+                              >
+                                <PublicGroupMemberCard member={member} />
+                              </motion.div>
 
+                              {
+                                member.description && (
+                                  <div className="mt-2 max-w-200 text-md text-slate-600" 
+                                  dangerouslySetInnerHTML={{ __html: member.description }}
+                                  />
+                                    
+                                )
+                              }
+
+                            </div>
+                          ))
+                        }
+
+                      </div>
+                      :
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
+                        {section.members.map((member, index) => (
+
+                          <motion.div
+                            key={member.id}
+                            initial={{ opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-40px' }}
+                            transition={{
+                              duration: 0.4,
+                              delay: Math.min((index % 8) * 0.04, 0.28),
+                              ease: [0.22, 1, 0.36, 1],
+                            }}
+                          >
+                            <PublicGroupMemberCard member={member} />
+                          </motion.div>
+                        ))}
+                      </div>
+                  }
                   {section.hasMore && (
                     <div className="mt-12 flex justify-center">
                       <button
@@ -269,7 +306,7 @@ const PeoplePage = () => {
           );
         })}
       </main>
-    </div>
+    </div >
   );
 };
 

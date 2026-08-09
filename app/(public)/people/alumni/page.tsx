@@ -1,6 +1,7 @@
 import { fetchAlumniAction } from "@/lib/load_data/loadAlumni";
 import { Timeline } from "@/components/pub/Timeline/Timeline";
 import { Metadata } from "next";
+import  { AlumniCategory,alumniCategories } from "@/sanity/schemas/alumni";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 const AlumniPage = async () => {
-  const result = await fetchAlumniAction({ page: 1, pageSize: 20 });
+  const result = await fetchAlumniAction({ page: 1, pageSize: 20, category: alumniCategories[0].value, year: 2023 });
 
   console.log("[AlumniPage] result", {
     success: result.success,
