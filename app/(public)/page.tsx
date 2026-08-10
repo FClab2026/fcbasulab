@@ -84,11 +84,11 @@ export default async function Home() {
               {/* ═══ STATS BAR ═══ */}
         <section className="stats-bar">
           <div className="stats-grid">
-            <StatCounter to={stats.publications} label="Publications" />
-            <StatCounter to={stats.projects} label="Research Projects" delay={0.05} />
-            <StatCounter to={stats.awards} label="Awards" delay={0.1} />
-            <StatCounter to={stats.alumni} label="Alumni" delay={0.15} />
-            <StatCounter to={stats.groupMembers} label="Team Members" delay={0.2} />
+            <StatCounter to={stats.publications} label="Publications"  delay={0.5}/>
+            <StatCounter to={stats.projects} label="Research Projects" delay={0.55} />
+            <StatCounter to={stats.awards} label="Awards" delay={0.60} />
+            <StatCounter to={stats.alumni} label="Alumni" delay={0.65} />
+            <StatCounter to={stats.groupMembers} label="Team Members" delay={0.70} />
           </div>
         </section>
 
