@@ -45,7 +45,7 @@ export default function ResearchFacilitiesPage() {
           Our Infrastructure
         </span>
         <h1 className="text-3xl md:text-5xl font-serif text-center font-bold text-slate-950 mb-4">
-          Research Facilities
+          Work Enviroment/Research Facilities
         </h1>
         <p className="text-slate-600 text-center max-w-2xl mx-auto font-sans text-sm md:text-base leading-relaxed">
           Our laboratory is equipped with state-of-the-art instruments supporting research across spectroscopy, microscopy, thermal analysis, and chemical characterization.

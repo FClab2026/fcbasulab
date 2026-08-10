@@ -30,7 +30,7 @@ const EquipmentCard = ({ item }: EquipmentCardProps) => {
       className="group/eqcard relative flex flex-col bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all duration-300 h-full w-full scroll-mt-24"
     >
       {item.imgUrl ? (
-        <div className="relative h-48 w-full overflow-hidden bg-slate-50 flex items-center justify-center">
+        <div className="relative w-full aspect-[380/450] overflow-hidden bg-slate-50 flex items-center justify-center">
           <img
             src={item.imgUrl}
             alt={item.name ?? 'Equipment Image'}
@@ -39,7 +39,7 @@ const EquipmentCard = ({ item }: EquipmentCardProps) => {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent" />
         </div>
       ) : (
-        <div className="relative h-48 w-full flex items-center justify-center bg-slate-50 border-b border-slate-100 text-slate-400">
+        <div className="relative w-full aspect-[380/450] flex items-center justify-center bg-slate-50 border-b border-slate-100 text-slate-400">
           <span className="text-xs">No Image Available</span>
         </div>
       )}
@@ -58,12 +58,6 @@ const EquipmentCard = ({ item }: EquipmentCardProps) => {
             {plainDesc}
           </p>
         </div>
-        {/* <Link
-          href={`/research/facilities#${item.id}`}
-          className="inline-flex items-center text-xs font-semibold text-amber-700 hover:text-amber-800 transition-colors mt-4 group/btn"
-        >
-          View Details &rarr;
-        </Link> */}
       </div>
     </div>
   )

@@ -14,14 +14,11 @@ interface NewsCardProps {
 function stripHtml(s: string): string {
   return s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()
 }
-
 export const NewsCard = ({ title, body, createdAt }: NewsCardProps) => {
-  const plainText = stripHtml(body);
-
   return (
     <div className="group/newscard relative flex flex-col bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all duration-300 h-full w-full">
-      <h3 
-        className="text-lg font-serif font-bold text-slate-950 mb-2 line-clamp-2 leading-snug group-hover/newscard:text-amber-700 transition-colors duration-200" 
+      <h3
+        className="text-lg font-serif font-bold text-slate-950 mb-2 line-clamp-2 leading-snug group-hover/newscard:text-amber-700 transition-colors duration-200"
         title={title}
       >
         {title}
@@ -33,9 +30,10 @@ export const NewsCard = ({ title, body, createdAt }: NewsCardProps) => {
           year: 'numeric'
         })}
       </div>
-      <p className="text-slate-600 text-xs leading-relaxed line-clamp-3 flex-1">
-        {plainText}
-      </p>
+      <div
+        className="prose prose-sm max-w-none text-slate-600 text-xs leading-relaxed line-clamp-3 flex-1 [&_a]:relative [&_a]:z-10 [&_a]:text-amber-700 [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-amber-800"
+        dangerouslySetInnerHTML={{ __html: body }}
+      />
     </div>
   )
 }
@@ -88,8 +86,12 @@ const NewsSection = () => {
     return () => observer.disconnect();
   }, [hasLoaded, loading]);
 
+
   const itemsToShow = news.slice(0, 6);
 
+  // if (news.length === 0 && !loading) {
+  //   return null; // Don't render the section if there's no news and not loading
+  // }
   return (
     <section ref={sectionRef} className="section news-section bg-white border-b border-slate-200/80">
       <div className="section-container">
@@ -98,7 +100,7 @@ const NewsSection = () => {
             <div className="section-label">Latest Updates</div>
             <h2 className="section-heading">News &amp; Announcements</h2>
           </div>
-          <Link href="/news/events" className="section-link">View all news &rarr;</Link>
+          <Link href="/news" className="section-link">View all news &rarr;</Link>
         </div>
 
         {loading && !hasLoaded ? (

@@ -27,7 +27,7 @@ function truncate(s: string, n: number): string {
 }
 
 export default async function Home() {
-  const [stats, publications, projects, equipments, researchAreas,galleryUrls] = await Promise.all([
+  const [stats, publications, projects, equipments, researchAreas, galleryUrls] = await Promise.all([
     fetchHomeStats(),
     fetchLatestPublications(4),
     fetchLatestProjects(2),
@@ -40,9 +40,11 @@ export default async function Home() {
     <div className="relative">
       {/* ═══ HERO ═══ */}
       <section className="hero">
-        <div className="hero-bg" 
-        style={{ backgroundImage: 
-        'url("/hero3.png")' }} 
+        <div className="hero-bg"
+          style={{
+            backgroundImage:
+              'url("/hero3.png")'
+          }}
         // 'url("/hero2.jpg")' }} 
         />
         <div className="hero-overlay" />
@@ -53,7 +55,7 @@ export default async function Home() {
               <span className="hero-badge-label">Department of Chemical Engineering &middot; IIT Delhi</span>
             </div>
           </HeroReveal>
-{/* Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab */}
+          {/* Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab */}
           <HeroReveal delay={0.4} y={40} duration={1}>
             <h1 className="hero-title">
               Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab
@@ -78,28 +80,22 @@ export default async function Home() {
             </div>
           </HeroReveal> */}
         </div>
+          
+              {/* ═══ STATS BAR ═══ */}
+        <section className="stats-bar">
+          <div className="stats-grid">
+            <StatCounter to={stats.publications} label="Publications" />
+            <StatCounter to={stats.projects} label="Research Projects" delay={0.05} />
+            <StatCounter to={stats.awards} label="Awards" delay={0.1} />
+            <StatCounter to={stats.alumni} label="Alumni" delay={0.15} />
+            <StatCounter to={stats.groupMembers} label="Team Members" delay={0.2} />
+          </div>
+        </section>
 
-        <div className="hero-scroll-indicator">
-          <HeroReveal delay={1.1} duration={0.6}>
-            <div className="hero-scroll-bounce">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M5 8l5 5 5-5" />
-              </svg>
-            </div>
-          </HeroReveal>
-        </div>
       </section>
 
-      {/* ═══ STATS BAR ═══ */}
-      <section className="stats-bar">
-        <div className="stats-grid">
-          <StatCounter to={stats.publications} label="Publications" />
-          <StatCounter to={stats.projects} label="Research Projects" delay={0.05} />
-          <StatCounter to={stats.awards} label="Awards" delay={0.1} />
-          <StatCounter to={stats.alumni} label="Alumni" delay={0.15} />
-          <StatCounter to={stats.groupMembers} label="Team Members" delay={0.2} />
-        </div>
-      </section>
+
+
 
       {/* ═══ ABOUT ═══ */}
       {/* ! Section Removed to reduce vvertical scrolling */}
@@ -190,10 +186,10 @@ export default async function Home() {
                           className="inline-flex items-center text-xs font-semibold text-amber-700 hover:text-amber-800 transition-colors mt-auto group/btn"
                         >
                           Read More
-                          <svg 
-                            className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
+                          <svg
+                            className="w-4 h-4 ml-1 transition-transform group-hover/btn:translate-x-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
                             stroke="currentColor"
                           >
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -209,8 +205,8 @@ export default async function Home() {
         </div>
       </section>
 
-      
-      
+
+
       {/* ═══ NEWS (White) ═══ */}
       <NewsSection />
 
@@ -227,7 +223,7 @@ export default async function Home() {
             </div>
           </Reveal>
           <div className="w-full overflow-hidden">
-          <ResearchCards publications={publications} projects={projects} />
+            <ResearchCards publications={publications} projects={projects} />
           </div>
         </div>
       </section>
@@ -238,24 +234,25 @@ export default async function Home() {
         <div className="section-container">
           <Reveal>
             <div className="section-header-row mb-10">
-              <div className="max-w-2xl">
+              <div className="max-w-3xl">
                 <div className="section-label">Our Infrastructure</div>
-                <h2 className="section-heading">Research Facilities</h2>
-                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                <h2 className="section-heading">Work Enviroment/Research Facilities</h2>
+                {/* <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                   Our laboratory is equipped with state-of-the-art instruments supporting research across
                   spectroscopy, microscopy, thermal analysis, and chemical characterization.
-                </p>
+                </p> */}
               </div>
               <Link href="/research/facilities" className="section-link self-end">
                 View all facilities &rarr;
               </Link>
             </div>
           </Reveal>
-          
+
           <div className="w-full overflow-hidden mt-10">
             <InfiniteCarousel speed={30} gap={24}>
               {equipments.map((item) => (
-                <div key={item.id} className="w-[300px] min-w-[300px] flex">
+                <div key={item.id}
+                  className="w-[300px] min-w-[300px] flex">
                   <EquipmentCard item={item} />
                 </div>
               ))}

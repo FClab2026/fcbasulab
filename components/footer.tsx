@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Phone, Mail, MapPin } from "lucide-react"
+import { Phone, Mail, MapPin, ExternalLink } from "lucide-react"
 import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa"
 import { IoLogoLinkedin } from "react-icons/io5"
 import { FiExternalLink } from "react-icons/fi";
@@ -14,19 +14,18 @@ const Footer = () => {
 
           {/* Removed if required uncomment */}
           <div className="footer-socials">
-            {/* <a href="https://www.facebook.com/Suddhsaatwa.Basu" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <span className="footer-social-icon"><FaFacebook /></span>
-            </a>
-            <a href="https://www.linkedin.com/in/suddhasatwa-basu-fnasc-fnae-frsc-5998882b/" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <span className="footer-social-icon"><FaTwitter /></span>
-            </a> */}
+            <a href="https://www.facebook.com/Suddhsaatwa.Basu" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <span className="footer-social-icon"><FaFacebook /></span>            </a>
 
             <a href="https://www.linkedin.com/in/suddhasatwa-basu-fnasc-fnae-frsc-5998882b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <span className="footer-social-icon"><IoLogoLinkedin size={16} /></span>
             </a>
-            <a href="https://www.h2dc12avenue.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-              <span className="footer-social-icon"><FiExternalLink size={16}/></span>
+            <a href="https://www.linkedin.com/in/suddhasatwa-basu-fnasc-fnae-frsc-5998882b/" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <span className="footer-social-icon"><FaTwitter /></span>
             </a>
+            {/* <a href="https://www.h2dc12avenue.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <span className="footer-social-icon"><FiExternalLink size={16}/></span>
+            </a> */}
           </div>
         </div>
 
@@ -59,6 +58,12 @@ const Footer = () => {
           <div className="footer-contact-item">
             <MapPin className="footer-contact-icon" size={16} />
             <span className="footer-contact-text">Block-1 A234, IIT Delhi</span>
+          </div>
+          <div className="footer-contact-item">
+            <FiExternalLink className="footer-contact-icon" size={16} />
+            <a href="https://www.h2dc12avenue.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <span className="footer-contact-text cursor-pointer">H2dc12Avenue</span>
+            </a>
           </div>
         </div>
 

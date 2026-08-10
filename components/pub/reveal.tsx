@@ -54,7 +54,6 @@ export function HeroReveal({
     </motion.div>
   )
 }
-
 export function StatCounter({
   to,
   suffix = "",
@@ -66,23 +65,19 @@ export function StatCounter({
   label: string
   delay?: number
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, amount: 0.4 })
   const mv = useMotionValue(0)
   const text = useTransform(mv, (v) => Math.round(v) + suffix)
 
   useEffect(() => {
-    if (!inView) return
     const controls = animate(mv, to, { duration: 1.5, ease: EASE, delay })
     return () => controls.stop()
-  }, [inView, to, delay, mv])
+  }, [to, delay, mv])
 
   return (
     <motion.div
-      ref={ref}
       className="stat-item"
       initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : undefined}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay, ease: EASE }}
     >
       <motion.div className="stat-number">{text}</motion.div>

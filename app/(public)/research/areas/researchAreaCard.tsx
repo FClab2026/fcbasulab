@@ -27,31 +27,29 @@ const ResearchAreaCard = ({ item, index }: { item: any, index: number }) => {
                 {item.name}
             </h2>
 
-            {/* Rectangular box. overflow-hidden creates a block formatting
-                context so the floated image is contained inside the box,
-                and the body text wraps around it in an L-shape: narrow
-                alongside the image at the top, full width once it clears. */}
-            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-100 p-6 md:p-8 overflow-hidden">
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-100 p-6 md:p-8 flex flex-col md:flex-row items-stretch gap-6 md:gap-10">
+                <div
+                    className="prose prose-slate prose-sm sm:prose-base max-w-none text-slate-600 leading-relaxed flex-1 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+                    dangerouslySetInnerHTML={{ __html: item.body }}
+                />
+
                 {imgUrl ? (
-                    <Image
-                        src={imgUrl}
-                        alt={item.name}
-                        width={480}
-                        height={360}
-                        quality={80}
-                        priority={index < 2}
-                        className="float-right w-32 sm:w-48 md:w-64 lg:w-72 h-24 sm:h-36 md:h-48 lg:h-56 object-cover rounded-xl ml-5 mb-4 shadow-sm"
-                    />
+                    <div className="relative w-full sm:w-70 md:w-80 lg:w-96 min-h-[220px] shrink-0 rounded-xl border border-slate-100 bg-slate-50 order-first md:order-last overflow-hidden">
+                        <Image
+                            src={imgUrl}
+                            alt={item.name}
+                            fill
+                            quality={80}
+                            priority={index < 2}
+                            sizes="(max-width: 768px) 100vw, 320px"
+                            className="object-contain p-4"
+                        />
+                    </div>
                 ) : (
-                    <div className="float-right w-32 sm:w-48 md:w-64 lg:w-72 h-24 sm:h-36 md:h-48 lg:h-56 flex items-center justify-center bg-slate-50 text-slate-400 text-xs sm:text-sm rounded-xl ml-5 mb-4 border border-dashed border-slate-200">
+                    <div className="w-full sm:w-64 md:w-72 lg:w-80 min-h-[220px] shrink-0 flex items-center justify-center bg-slate-50 text-slate-400 text-xs sm:text-sm rounded-xl border border-dashed border-slate-200 order-first md:order-last">
                         No Image Available
                     </div>
                 )}
-
-                <div
-                    className="prose prose-slate prose-sm sm:prose-base max-w-none text-slate-600 leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
-                    dangerouslySetInnerHTML={{ __html: item.body }}
-                />
             </div>
         </motion.div>
     )
