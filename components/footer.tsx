@@ -17,10 +17,10 @@ const Footer = () => {
             <a href="https://www.facebook.com/Suddhsaatwa.Basu" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
               <span className="footer-social-icon"><FaFacebook /></span>            </a>
 
-            <a href="https://www.linkedin.com/in/suddhasatwa-basu-fnasc-fnae-frsc-5998882b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href="https://x.com/SBasuIITD?s=20" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <span className="footer-social-icon"><IoLogoLinkedin size={16} /></span>
             </a>
-            <a href="https://www.linkedin.com/in/suddhasatwa-basu-fnasc-fnae-frsc-5998882b/" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <a href="https://www.linkedin.com/in/suddhasatwa-basu-fna-fnasc-fnae-frsc-uk-fie-5998882b?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
               <span className="footer-social-icon"><FaTwitter /></span>
             </a>
             {/* <a href="https://www.h2dc12avenue.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
