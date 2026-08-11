@@ -10,6 +10,14 @@ export default defineType({
   fields: [
     defineField({name: 'name', type: 'string', validation: (r) => r.required(), group: 'content'}),
     defineField({
+      name:'rank',
+      description:'Rank of the research area for ordering (lower number means higher priority)| Not visible on the frontend',
+      type:'number',
+      validation: (r) => r.required(),
+      initialValue: 0,
+      group: 'content',
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       ...richTextBody,

@@ -45,14 +45,14 @@ export default function ResearchFacilitiesPage() {
           Our Infrastructure
         </span>
         <h1 className="text-3xl md:text-5xl font-serif text-center font-bold text-slate-950 mb-4">
-          Work Enviroment/Research Facilities
+          Research Facilities
         </h1>
         <p className="text-slate-600 text-center max-w-2xl mx-auto font-sans text-sm md:text-base leading-relaxed">
-          Our laboratory is equipped with state-of-the-art instruments supporting research across spectroscopy, microscopy, thermal analysis, and chemical characterization.
+          Our laboratory is equipped with state-of-the-art instruments supporting research across   electrochemical, optical, and thermo-chemical application aspects of materials
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {data.length === 0 ? (
           <div className="col-span-full py-20 text-center text-slate-400 font-light">
             No equipment listed yet.

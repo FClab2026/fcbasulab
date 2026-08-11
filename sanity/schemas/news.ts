@@ -1,14 +1,13 @@
-import {defineField, defineType} from 'sanity'
-import {richTextBody} from './richText'
-import {seoFields, seoGroup} from './seoFields'
+import { defineField, defineType } from 'sanity'
+import { richTextBody } from './richText'
+import { seoFields, seoGroup } from './seoFields'
 
 export default defineType({
   name: 'news',
   title: 'News & Announcement',
   type: 'document',
-  groups: [{name: 'content', title: 'Content', default: true}, seoGroup],
+  groups: [{ name: 'content', title: 'Content', default: true }, seoGroup],
   fields: [
-    defineField({name: 'title', type: 'string', validation: (r) => r.required(), group: 'content'}),
     defineField({
       name: 'body',
       title: 'Body',
@@ -21,8 +20,8 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Vacancy', value: 'Vacancy'},
-          {title: 'Event', value: 'Event'},
+          { title: 'Vacancy', value: 'Vacancy' },
+          { title: 'Event', value: 'Event' },
         ],
       },
       initialValue: 'Event',
@@ -31,5 +30,25 @@ export default defineType({
     }),
     ...seoFields,
   ],
-  preview: {select: {title: 'title', subtitle: 'type'}},
+  preview: {
+    select: {
+      body: 'body',
+      type: 'type',
+    },
+    prepare({ body, type }) {
+      const firstLine =
+        body?.find((block: any) => block._type === 'block')
+          ?.children
+          ?.map((child: any) => child.text)
+          .join(' ')
+          .trim() || 'Untitled'
+
+      const title = firstLine.split(/\s+/).slice(0, 5).join(' ')
+
+      return {
+        title: title + (firstLine.split(/\s+/).length > 5 ? '...' : ''),
+        subtitle: type,
+      }
+    },
+  },
 })

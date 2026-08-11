@@ -145,7 +145,7 @@ const CategorySection = ({
                     className="
                   prose prose-sm max-w-none inline
                   text-[13px] text-slate-600 leading-snug
-                  prose-p:inline prose-p:m-0 prose-p:text-[13px]
+                  prose-p:inline prose-p:m-0 prose-p:text-[14px]
                   prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-2
                   prose-strong:text-slate-900
                   prose-em:text-slate-900

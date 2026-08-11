@@ -8,7 +8,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import type { SanityImageSource } from '@sanity/image-url'
 
 const RESEARCH_EQUIPMENTS = groq`
-  *[_type == "researchEquipment"] | order(_createdAt asc) {
+  *[_type == "researchEquipment"] | order(rank asc, _createdAt desc) {
     "id": _id,
     name,
     body,

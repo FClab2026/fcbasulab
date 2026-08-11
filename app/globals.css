@@ -676,7 +676,7 @@
 .page-header {
     background: #f8fafc;
     border-bottom: 1px solid rgba(15, 37, 87, 0.08);
-    padding: 72px 0 56px;
+    padding: 72px 0 0;
 }
 
 .page-header-inner {
@@ -1681,7 +1681,7 @@
 .research-areas-page-container {
     background: #ffffff;
     min-height: 100vh;
-    padding: 64px 0;
+    padding: 32px 0;
 }
 
 .research-areas-header {
@@ -1790,7 +1790,38 @@
     color: var(--c-accent-light);
     font-style: normal;
 }
+/* Custom scrollbar — polished version */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 transparent;
+}
 
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #64748b, #334155); /* slate-500 → slate-700 */
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background 0.25s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #475569, #1e293b); /* slate-600 → slate-800 */
+  background-clip: padding-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: #1e293b;
+  background-clip: padding-box;
+}
 .research-area-body strong,
 .research-area-body b {
     color: #0f172a;

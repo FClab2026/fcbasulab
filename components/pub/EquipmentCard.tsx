@@ -30,7 +30,7 @@ const EquipmentCard = ({ item }: EquipmentCardProps) => {
       className="group/eqcard relative flex flex-col bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all duration-300 h-full w-full scroll-mt-24"
     >
       {item.imgUrl ? (
-        <div className="relative w-full aspect-[380/450] overflow-hidden bg-slate-50 flex items-center justify-center">
+        <div className="relative w-full aspect-[420/450] overflow-hidden bg-slate-50 flex items-center justify-center">
           <img
             src={item.imgUrl}
             alt={item.name ?? 'Equipment Image'}

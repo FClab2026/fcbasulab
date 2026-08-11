@@ -43,7 +43,7 @@ export default async function Home() {
         <div className="hero-bg"
           style={{
             backgroundImage:
-              'url("/hero3.png")'
+              'url("/heorbg.png")'
           }}
         // 'url("/hero2.jpg")' }} 
         />

@@ -24,7 +24,6 @@ const ptToHtml = (blocks: PortableTextBlock[] | null | undefined) =>
 
 export type NewsItem = {
   id: string
-  title: string
   body: string
   type: NewsAndAnnouncementsType
   updatedAt: string
@@ -46,7 +45,6 @@ export interface ResultsGroup {
 const serialize = (rows: NewsWithPortableText[]): NewsItem[] =>
   rows.map((r) => ({
     id: r.id,
-    title: r.title,
     body: ptToHtml(r.body),
     type: r.type,
     updatedAt: r.updatedAt,

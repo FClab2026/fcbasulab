@@ -6,7 +6,6 @@ import { fetchNewsActionSerialized } from '@/lib/load_data/loadNews';
 import InfiniteCarousel from '@/components/pub/InfiniteCarousel';
 
 interface NewsCardProps {
-  title: string;
   body: string;
   createdAt: Date | string;
 }
@@ -14,15 +13,10 @@ interface NewsCardProps {
 function stripHtml(s: string): string {
   return s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()
 }
-export const NewsCard = ({ title, body, createdAt }: NewsCardProps) => {
+export const NewsCard = ({ body, createdAt }: NewsCardProps) => {
   return (
     <div className="group/newscard relative flex flex-col bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all duration-300 h-full w-full">
-      <h3
-        className="text-lg font-serif font-bold text-slate-950 mb-2 line-clamp-2 leading-snug group-hover/newscard:text-amber-700 transition-colors duration-200"
-        title={title}
-      >
-        {title}
-      </h3>
+    
       <div className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase mb-4">
         {new Date(createdAt).toLocaleDateString('en-US', {
           month: 'short',

@@ -42,12 +42,12 @@ export default function ResearchAreasPage() {
   return (
     <div className="research-areas-page-container">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-10">
+        <h1 className="text-3xl md:text-4xl font-bold text-center">
           Research Areas
         </h1>
       </div>
 
-      <div className="research-areas-list">
+      <div className="grid p-6.25 gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mx-auto items-stretch">
         {data.map((item, index) => (
           <ResearchAreaCard key={item.id} item={item} index={index} />
         ))}

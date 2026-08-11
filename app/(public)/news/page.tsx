@@ -19,7 +19,7 @@ const CATEGORY_ORDER: NewsAndAnnouncementsType[] = [
 ]
 
 const CATEGORY_LABELS: Record<NewsAndAnnouncementsType, string> = {
-    Event: "Events",
+    Event: "Lab-Happenings",
     Vacancy: "Vacancies",
 }
 
