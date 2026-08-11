@@ -47,7 +47,7 @@ export default function ResearchAreasPage() {
         </h1>
       </div>
 
-      <div className="grid p-6.25 gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mx-auto items-stretch">
+      <div className="grid p-8 gap-5 grid-cols-1 md:grid-cols-2 3xl:grid-cols-3 mx-auto">
         {data.map((item, index) => (
           <ResearchAreaCard key={item.id} item={item} index={index} />
         ))}

@@ -19,13 +19,13 @@ const ResearchAreaCard = ({ item, index }: { item: any; index: number }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: 0.1 }}
-      className="w-full h-[780px] mx-auto scroll-mt-24" // fixed, uniform card height
+      className="w-full h-[805px] mx-auto scroll-mt-24" // fixed, uniform card height
     >
       <div className="h-full flex flex-col rounded-2xl border border-slate-200 bg-[#f8fafc]  shadow-sm shadow-slate-100 p-6 md:p-8 gap-4">
 
         {/* Image: fixed height so every card matches */}
         {imgUrl ? (
-          <div className="relative w-full h-[180px] shrink-0 rounded-xl border border-slate-100 bg-white overflow-hidden">
+          <div className="relative w-full h-[270px] shrink-0 rounded-xl border border-slate-100 bg-white overflow-hidden">
             <Image
               src={imgUrl}
               alt={item.name}
@@ -36,7 +36,7 @@ const ResearchAreaCard = ({ item, index }: { item: any; index: number }) => {
             />
           </div>
         ) : (
-          <div className="w-full h-[180px] shrink-0 flex items-center justify-center bg-slate-50 text-slate-400 text-xs sm:text-sm rounded-xl border border-dashed border-slate-200">
+          <div className="w-full h-[270px] shrink-0 flex items-center justify-center bg-slate-50 text-slate-400 text-xs sm:text-sm rounded-xl border border-dashed border-slate-200">
             No Image Available
           </div>
         )}
@@ -47,7 +47,7 @@ const ResearchAreaCard = ({ item, index }: { item: any; index: number }) => {
 
         {/* Body: takes remaining space, scrolls internally */}
         <div
-          className="custom-scrollbar text-justify flex-1 min-h-0 overflow-y-auto pr-1 prose prose-slate prose-sm sm:prose-base max-w-none text-slate-600 leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+          className="custom-scrollbar text-justify flex-1 min-h-0 overflow-y-auto pr-1 prose prose-slate prose-p:text-[15.5px] max-w-none text-slate-600 leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
           dangerouslySetInnerHTML={{ __html: item.body }}
         />
       </div>
