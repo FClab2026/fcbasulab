@@ -236,7 +236,7 @@ export default async function Home() {
             <div className="section-header-row mb-10">
               <div className="max-w-3xl">
                 <div className="section-label">Our Infrastructure</div>
-                <h2 className="section-heading">Work Enviroment/Research Facilities</h2>
+                <h2 className="section-heading">Research Facilities</h2>
                 {/* <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                   Our laboratory is equipped with state-of-the-art instruments supporting research across
                   spectroscopy, microscopy, thermal analysis, and chemical characterization.

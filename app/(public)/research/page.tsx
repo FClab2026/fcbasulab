@@ -131,7 +131,7 @@ const ResearchPage = () => {
         {isExpanded && (
           <div className="mt-4 pt-4 border-t border-slate-100 ml-9 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
             {project.body && (
-              <div className="text-sm text-slate-600 leading-relaxed font-sans max-w-3xl" dangerouslySetInnerHTML={{ __html: project.body }} />
+              <div className="text-sm text-slate-600 leading-relaxed font-sans max-w-3xl text-justify" dangerouslySetInnerHTML={{ __html: project.body }} />
             )}
 
             <div className="flex gap-4 text-xs">

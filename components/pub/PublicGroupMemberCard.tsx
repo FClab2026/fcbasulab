@@ -74,7 +74,7 @@ const PublicGroupMemberCard = ({ member }: { member: GroupMember }) => {
               Research
             </div>
             <div
-              className="prose prose-sm max-w-none text-slate-600 leading-relaxed line-clamp-3 prose-p:my-0 prose-a:text-amber-700 prose-strong:text-slate-900"
+              className="text-justify prose prose-sm max-w-none text-slate-600 leading-relaxed line-clamp-3 prose-p:my-0 prose-a:text-amber-700 prose-strong:text-slate-900"
               dangerouslySetInnerHTML={{ __html: member.researchAreas }}
             />
           </div>

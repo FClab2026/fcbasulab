@@ -66,7 +66,7 @@ const GroupMemberCard = ({ member }: { member: GroupMember }) => {
           <div className="mb-6 flex-1 text-sm text-gray-600 line-clamp-3 overflow-hidden">
             <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Research Focus</div>
             <div 
-              className="prose prose-sm max-w-none"
+              className="prose prose-sm max-w-none text-justify"
               dangerouslySetInnerHTML={{ __html: member.researchAreas }} 
             />
           </div>

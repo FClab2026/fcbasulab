@@ -49,7 +49,7 @@ const ResearchAreaCard = ({ item, index }: { item: any, index: number }) => {
                 )}
 
                 <div
-                    className="prose prose-slate prose-sm sm:prose-base max-w-none text-slate-600 leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+                    className="text-justify prose prose-slate prose-sm sm:prose-base max-w-none text-slate-600 leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
                     dangerouslySetInnerHTML={{ __html: item.body }}
                 />
             </div>

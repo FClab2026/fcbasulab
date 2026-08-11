@@ -45,7 +45,7 @@ export const TimelineItem = ({ item, index, showDate = false }: TimelineItemProp
             </span>
           )}
           <div
-            className="prose prose-sm md:prose-base max-w-none text-slate-700
+            className="text-justify prose prose-sm md:prose-base max-w-none text-slate-700
                        prose-p:my-0 prose-p:leading-relaxed inline
                        prose-strong:text-slate-900
                        prose-a:text-amber-700 prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-2"

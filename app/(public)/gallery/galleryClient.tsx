@@ -144,7 +144,7 @@ const GalleryClient = ({ initialGallery, hasMoreInitial }: GalleryClientProps) =
                                     </h2>
 
                                     <div
-                                        className="prose prose-sm max-w-none text-slate-600 leading-snug line-clamp-2 prose-p:my-0 prose-a:text-amber-700 prose-strong:text-slate-900 text-[13px]"
+                                        className="text-justify prose prose-sm max-w-none text-slate-600 leading-snug line-clamp-2 prose-p:my-0 prose-a:text-amber-700 prose-strong:text-slate-900 text-[13px]"
                                         dangerouslySetInnerHTML={{ __html: item.description }}
                                     />
 
@@ -226,7 +226,7 @@ const GalleryClient = ({ initialGallery, hasMoreInitial }: GalleryClientProps) =
                                     {selected.title}
                                 </h2>
                                 <div
-                                    className="prose prose-sm md:prose-base prose-invert max-w-none text-slate-300 prose-a:text-amber-400"
+                                    className="text-justify prose prose-sm md:prose-base prose-invert max-w-none text-slate-300 prose-a:text-amber-400"
                                     dangerouslySetInnerHTML={{ __html: selected.description }}
                                 />
                                 <time

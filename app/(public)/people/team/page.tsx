@@ -241,7 +241,7 @@ const PeoplePage = () => {
 
                               {
                                 member.description && (
-                                  <div className="mt-2 max-w-200 text-md text-slate-600" 
+                                  <div className="mt-2 max-w-200 text-md text-slate-600 text-justify" 
                                   dangerouslySetInnerHTML={{ __html: member.description }}
                                   />
                                     

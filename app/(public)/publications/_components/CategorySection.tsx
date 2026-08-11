@@ -122,7 +122,7 @@ const CategorySection = ({
                   delay: Math.min(index * 0.025, 0.2),
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="group relative grid grid-cols-[64px_1fr] md:grid-cols-[88px_1fr] gap-4 md:gap-6 py-5 border-b border-slate-100 last:border-b-0"
+                className="group relative grid grid-cols-[64px_1fr] md:grid-cols-[88px_1fr] gap-4 md:gap-6 py-5 pr-4 border-b border-slate-100 last:border-b-0"
               >
                 {/* Left rail: year + dot on vertical line */}
                 <div className="relative">
@@ -170,6 +170,7 @@ const CategorySection = ({
 
                   prose-strong:text-slate-900
                   prose-em:text-slate-900
+                  text-justify 
                 "
                   dangerouslySetInnerHTML={{ __html: item.body }}
                 />

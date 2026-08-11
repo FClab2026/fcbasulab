@@ -25,7 +25,7 @@ export const NewsCard = ({ body, createdAt }: NewsCardProps) => {
         })}
       </div>
       <div
-        className="prose prose-sm max-w-none text-slate-600 text-xs leading-relaxed line-clamp-3 flex-1 [&_a]:relative [&_a]:z-10 [&_a]:text-amber-700 [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-amber-800"
+        className="text-justify prose prose-sm max-w-none text-slate-600 text-xs leading-relaxed line-clamp-3 flex-1 [&_a]:relative [&_a]:z-10 [&_a]:text-amber-700 [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-amber-800"
         dangerouslySetInnerHTML={{ __html: body }}
       />
     </div>

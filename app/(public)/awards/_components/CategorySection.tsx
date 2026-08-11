@@ -155,6 +155,7 @@ const CategorySection = ({
                         prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-2
                         prose-strong:text-slate-900
                         prose-em:text-slate-900
+                        text-justify
                       "
                     dangerouslySetInnerHTML={{ __html: item.body }}
                   />

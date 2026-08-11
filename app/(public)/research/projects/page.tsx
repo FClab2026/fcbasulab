@@ -370,7 +370,7 @@ const ResearchPage = () => {
                 <div>
                   <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Details</div>
                   <div
-                    className="text-sm text-slate-700 leading-relaxed prose prose-sm max-w-none"
+                    className="text-sm text-slate-700 leading-relaxed prose prose-sm max-w-none text-justify"
                     dangerouslySetInnerHTML={{ __html: activeProject.body }}
                   />
                 </div>
