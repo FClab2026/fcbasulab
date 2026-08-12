@@ -474,13 +474,13 @@
 
 .hero {
     position: relative;
-    min-height: calc(100vh - 72px);
+    /* min-height: calc(100vh - 72px); */
     width: 100%;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    padding: 75px 0 0;
+    padding: 50px 0 0;
     background: #0b1220;
 }
 
@@ -571,8 +571,9 @@
     color: rgba(255, 255, 255, 0.72);
     font-weight: 400;
     line-height: 1.7;
-    max-width: 650px;
+    max-width: 100%;
     margin-top: 24px;
+    text-align:justify;
 }
 
 .hero-buttons {
@@ -650,12 +651,13 @@
 
 @media (max-width: 768px) {
     .hero {
-        padding: 64px 0 96px;
+        padding: 64px 0 0px;
         min-height: auto;
     }
 
+
     .hero-content {
-        padding: 0 24px;
+        padding: 0 24px 20px 24px;
     }
 
     .hero-buttons {
