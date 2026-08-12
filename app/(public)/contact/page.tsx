@@ -29,19 +29,19 @@ const ContactPage = () => {
             </h2>
 
             <p className="font-semibold text-gray-900">
-              Professor, Department of Chemical Engineering
+              Professor (HAG), Department of Chemical Engineering, IIT Delhi
             </p>
 
             <p className="text-gray-800">
-              <span className="font-semibold">Office:</span> Academic Block 1 - 325
+              <span className="font-semibold">Office:</span> Academic Block 2 - Room No. 386
             </p>
 
             <p className="text-gray-800">
-              <span className="font-semibold">Laboratory:</span> A-225, B-122
+              <span className="font-semibold">Laboratory:</span> Block-1 234A, Block-2 390, Block-6 116
             </p>
 
             <p className="text-gray-800">
-              <span className="font-semibold">Call us @</span> +91-(051) 2759 7018
+              <span className="font-semibold">Call us @</span> +011-2659-1035, +91-7838134181
             </p>
 
             <p className="font-semibold text-gray-900">Write to us @:</p>
@@ -54,10 +54,16 @@ const ContactPage = () => {
                 sbasu@chemical.iitd.ac.in
               </a>
               <a
-                href="mailto:chemlabiitd@gmail.com"
+                href="mailto:drsbasu@gmail.com"
                 className="block w-full text-center rounded-md bg-orange-500 hover:bg-orange-600 transition-colors text-white font-semibold py-3 px-4 shadow-sm"
               >
-                chemlabiitd@gmail.com
+                drsbasu@gmail.com
+              </a>
+              <a
+                href="mailto:h2dc12avenue@gmail.com"
+                className="block w-full text-center rounded-md bg-orange-500 hover:bg-orange-600 transition-colors text-white font-semibold py-3 px-4 shadow-sm"
+              >
+                h2dc12avenue@gmail.com
               </a>
             </div>
           </div>

@@ -57,7 +57,7 @@ const Footer = () => {
           </div>
           <div className="footer-contact-item">
             <MapPin className="footer-contact-icon" size={16} />
-            <span className="footer-contact-text">Block-1 A234, IIT Delhi</span>
+            <span className="footer-contact-text">Block-1 234A, IIT Delhi</span>
           </div>
           <div className="footer-contact-item">
             <FiExternalLink className="footer-contact-icon" size={16} />

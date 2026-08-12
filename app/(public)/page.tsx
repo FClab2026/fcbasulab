@@ -58,7 +58,7 @@ export default async function Home() {
           {/* Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab */}
           <HeroReveal delay={0.4} y={40} duration={1}>
             <h1 className="hero-title">
-              Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Lab
+              Fuel Cell, Battery Application and Sustainable-Energy Utilisation (FC-BASU) Research Group
             </h1>
             <span className="hero-title-divider" />
           </HeroReveal>
