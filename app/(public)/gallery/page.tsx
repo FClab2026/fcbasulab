@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import GalleryClient from "./galleryClient"
 import fetchGalleryAction from "@/lib/load_data/load_gallery"
+import { getFullImageUrl } from '@/lib/getFullImageUrl'
 
 const SITE_TITLE = "Gallery | ChemLab"
 const SITE_DESCRIPTION =
@@ -28,15 +29,6 @@ export const metadata: Metadata = {
         title: SITE_TITLE,
         description: SITE_DESCRIPTION,
     },
-}
-
-const getFullImageUrl = (url: string | null | undefined) => {
-    if (!url) return ""
-    if (url.startsWith("http") || url.startsWith("/")) return url
-    const publicUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL
-    return publicUrl
-        ? `${publicUrl}/${url}`
-        : `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${url}`
 }
 
 const stripHtml = (html: string) =>

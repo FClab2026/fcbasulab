@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Loader2 } from 'lucide-react'
 import { format } from 'date-fns'
+import { getFullImageUrl } from '@/lib/getFullImageUrl'
 
 import fetchGalleryAction from '@/lib/load_data/load_gallery'
 
@@ -22,14 +23,7 @@ interface GalleryClientProps {
 
 const PAGE_SIZE = 12
 
-const getFullImageUrl = (url: string | null | undefined) => {
-    if (!url) return ''
-    if (url.startsWith('http') || url.startsWith('/')) return url
-    const publicUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL
-    return publicUrl
-        ? `${publicUrl}/${url}`
-        : `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${url}`
-}
+
 
 // "d MMM''yy" -> the doubled '' is date-fns' escape for a literal
 // apostrophe, giving e.g. "23 Feb'26"

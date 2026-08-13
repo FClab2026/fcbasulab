@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone, ExternalLink, User } from "lucide-react";
+import { getFullImageUrl } from '@/lib/getFullImageUrl'
 
 interface GroupMember {
   id: string;
@@ -15,14 +16,6 @@ interface GroupMember {
   phoneNumber: string | null;
 }
 
-const getFullImageUrl = (url: string | null) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("/")) return url;
-  const publicUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
-  return publicUrl
-    ? `${publicUrl}/${url}`
-    : `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${url}`;
-};
 
 const getInitials = (name: string) =>
   name

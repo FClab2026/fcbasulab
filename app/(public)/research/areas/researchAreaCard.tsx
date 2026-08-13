@@ -1,14 +1,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { getFullImageUrl } from '@/lib/getFullImageUrl'
 
-const getFullImageUrl = (url: string | null) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("/")) return url;
-    const publicUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    return publicUrl ? `${publicUrl}/${url}` : `https://res.cloudinary.com/${cloudName}/image/upload/${url}`;
-};
+
 const ResearchAreaCard = ({ item, index }: { item: any; index: number }) => {
   const imgUrl = getFullImageUrl(item.imgUrl);
 
