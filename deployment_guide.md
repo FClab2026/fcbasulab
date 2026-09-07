@@ -108,7 +108,7 @@ Example:
 
 ```bash
 scp fcbasulab-deploy.tar.gz \
-  ch7230098@vweb213:/var/www/fcbasulab/https/
+  ch723xxxx@fcbasulab.iitd.ac.in:/var/www/fcbasulab/https/
 ```
 
 The important requirement is that the file arrives as:
