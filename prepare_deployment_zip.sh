@@ -7,12 +7,26 @@ echo " FC-BASU Lab Deployment Package"
 echo "======================================"
 
 echo ""
-echo "[1/5] Building application..."
+echo "[0/5] Cleaning up previous build artifacts..."
+
+rm -rf .next
+rm -rf node_modules
+
+npm ci
+
+echo ""
+echo "[1/5] Installing dependencies..."
+
+npm ci
+
+
+echo ""
+echo "[2/5] Building application..."
 
 npm run build
 
 echo ""
-echo "[2/5] Preparing standalone package..."
+echo "[3/5] Preparing standalone package..."
 
 # Next.js standalone output
 STANDALONE=".next/standalone"
@@ -38,7 +52,7 @@ rm -f "$STANDALONE/.env"
 echo "Standalone package ready."
 
 echo ""
-echo "[3/5] Creating deployment archive..."
+echo "[4/5] Creating deployment archive..."
 
 rm -f fcbasulab-deploy.tar.gz
 
@@ -46,7 +60,7 @@ tar -czf fcbasulab-deploy.tar.gz \
     -C "$STANDALONE" .
 
 echo ""
-echo "[4/5] Verifying archive..."
+echo "[5/5] Verifying archive..."
 
 if ! tar -tzf fcbasulab-deploy.tar.gz | grep -q '^./server.js$'; then
     echo "ERROR: server.js missing from archive"
