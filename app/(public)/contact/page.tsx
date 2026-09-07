@@ -14,7 +14,7 @@ const ContactPage = () => {
             <div className="relative aspect-square w-full overflow-hidden rounded-lg">
               <Image
                 src="/prof_dp.jpg"
-                alt="Dr. Chandra Shekhar Sharma"
+                alt="Prof. Suddhasatwa Basu"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 360px"

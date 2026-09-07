@@ -34,10 +34,9 @@ const Footer = () => {
           {/* <h3 className="footer-col-heading">Links</h3> */}
           <ul className="footer-links-2col">
             <li><Link href="/">Home</Link></li>
-            <li><Link href="/people">People</Link></li>
+            <li><Link href="/people/team">People</Link></li>
             <li><Link href="/research/areas">Research</Link></li>
             <li><Link href="/news">News</Link></li>
-            <li><Link href="/about">About</Link></li>
             <li><Link href="/contact">Contact Us</Link></li>
             <li><a href="/studio" target="_blank">Admin</a></li>
 

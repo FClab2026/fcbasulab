@@ -30,7 +30,7 @@ fcbasulab-app/
         |
         | PM2
         v
-Next.js standalone server :3000
+Next.js standalone server :3001
         |
         | Apache reverse proxy
         v
@@ -53,7 +53,7 @@ Current structure:
 https/
 ├── .env
 ├── .nvm/
-├── .pm2/
+├── pm2-home/
 ├── fcbasulab-app/
 ├── cgi-bin/
 ├── html/
@@ -69,86 +69,32 @@ https/
 |---|---|
 | `.env` | Server-side runtime environment variables |
 | `.nvm/` | User-local NVM installation and Node.js 24 |
-| `.pm2/` | PM2 runtime state, logs and PIDs |
+| `pm2-home/` | PM2 runtime state, logs and PIDs |
 | `fcbasulab-app/` | Deployed application files only |
 | `use-node24.sh` | Loads Node.js 24 |
 | `deploy-zip.sh` | Main deployment script |
 | `deploy.sh` | Starts/recreates the PM2 application |
 | `pm2-alias.sh` | Optional PM2 shell alias |
 
-The `fcbasulab-app` directory should contain only the deployed application and should not contain `.pm2`.
+The `fcbasulab-app` directory should contain only the deployed application and should not contain `pm2-home`.
 
 ---
 
-# 3. Local Build
+## 3. Local Build
 
-## Linux
-
-From the project directory:
+Run the deployment script from your terminal (WSL/Ubuntu if using Windows):
 
 ```bash
-npm ci
-npm run build
+./deploy.sh
 ```
 
-## Windows
+This script will:
 
-If developing on Windows, use **WSL** and perform the production build inside the Linux environment.
+Install the required packages.
+Build the application.
+Create the required deployment archive.
 
-Example:
-
-```bash
-npm ci
-npm run build
-```
-
-This keeps the build environment consistent with the Linux server environment.
-
-### Important
-
-Do **not** run:
-
-```bash
-npm run build
-```
-
-on the IITD server.
-
-The Next.js build can consume significant memory and may fail with an **OOM (Out Of Memory)** error on the server.
-
----
-
-# 4. Create the Deployment Archive
-
-After a successful local build, create the deployment archive.
-
-The archive must use the exact filename expected by the deployment script:
-
-```text
-fcbasulab-deploy.tar.gz
-```
-
-For example:
-
-```bash
-tar -czf fcbasulab-deploy.tar.gz .next public
-```
-
-Use the project's current deployment packaging requirements if additional files need to be included.
-
-Before copying, verify:
-
-```bash
-ls -lh fcbasulab-deploy.tar.gz
-```
-
-Optionally inspect it:
-
-```bash
-tar -tzf fcbasulab-deploy.tar.gz | head -30
-```
-
----
+Once the script completes successfully, copy the generated fcbasulab-deploy.tar.gz file to the IITD server and run ./deploy-zip.sh as described in the following section.
 
 # 5. Copy the Archive to the IITD Server
 
@@ -276,7 +222,7 @@ Node.js 24 does not need to be installed system-wide for this deployment setup.
 PM2 stores its runtime data outside the application directory:
 
 ```text
-/var/www/fcbasulab/https/.pm2
+/var/www/fcbasulab/https/pm2-home
 ```
 
 This keeps the application directory clean.
@@ -284,7 +230,7 @@ This keeps the application directory clean.
 The PM2 home is:
 
 ```bash
-export PM2_HOME="/var/www/fcbasulab/https/.pm2"
+export PM2_HOME="/var/www/fcbasulab/https/pm2-home"
 ```
 
 The application itself is:
@@ -296,13 +242,13 @@ The application itself is:
 ## Check PM2
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 list
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 list
 ```
 
 ## Check the application
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 show fcbasulab
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 show fcbasulab
 ```
 
 The output should show:
@@ -315,13 +261,13 @@ node.js version 24.20.0
 ## Logs
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 logs fcbasulab
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 logs fcbasulab
 ```
 
 Or:
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 logs fcbasulab --lines 100
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 logs fcbasulab --lines 100
 ```
 
 ---
@@ -337,7 +283,7 @@ source /var/www/fcbasulab/https/use-node24.sh
 Then set the PM2 home:
 
 ```bash
-export PM2_HOME="/var/www/fcbasulab/https/.pm2"
+export PM2_HOME="/var/www/fcbasulab/https/pm2-home"
 ```
 
 Now PM2 commands can be used:
@@ -357,7 +303,7 @@ If the `pm2f` alias has been configured, it can be used instead.
 For convenience, an alias can be configured:
 
 ```bash
-alias pm2f='PM2_HOME=/var/www/fcbasulab/https/.pm2 pm2'
+alias pm2f='PM2_HOME=/var/www/fcbasulab/https/pm2-home pm2'
 ```
 
 Then:
@@ -372,7 +318,7 @@ pm2f show fcbasulab
 The alias is only a shell convenience. PM2 itself continues to use:
 
 ```text
-/var/www/fcbasulab/https/.pm2
+/var/www/fcbasulab/https/pm2-home
 ```
 
 ---
@@ -382,10 +328,10 @@ The alias is only a shell convenience. PM2 itself continues to use:
 Before relying on Apache/domain routing, test the Next.js application directly:
 
 ```bash
-curl --noproxy "*" http://127.0.0.1:3000
+curl --noproxy "*" http://127.0.0.1:3001
 ```
 
-A successful response means the Next.js server is running and accepting requests on port `3000`.
+A successful response means the Next.js server is running and accepting requests on port `3001`.
 
 If there are API/network errors, check:
 
@@ -400,7 +346,7 @@ pm2 logs fcbasulab --lines 100
 The application runs internally on:
 
 ```text
-127.0.0.1:3000
+127.0.0.1:3001
 ```
 
 The public domain is:
@@ -424,13 +370,13 @@ IITD server
 Apache / web server
    |
    v
-127.0.0.1:3000
+127.0.0.1:3001
    |
    v
 Next.js
 ```
 
-The DNS entry points the domain to the IITD server. Apache/web-server configuration then reverse-proxies requests for the domain to the Next.js application on port `3000`.
+The DNS entry points the domain to the IITD server. Apache/web-server configuration then reverse-proxies requests for the domain to the Next.js application on port `3001`.
 
 Conceptually, the Apache configuration is similar to:
 
@@ -439,14 +385,14 @@ Conceptually, the Apache configuration is similar to:
     ServerName fcbasulab.iitd.ac.in
 
     ProxyPreserveHost On
-    ProxyPass        / http://127.0.0.1:3000/
-    ProxyPassReverse / http://127.0.0.1:3000/
+    ProxyPass        / http://127.0.0.1:3001/
+    ProxyPassReverse / http://127.0.0.1:3001/
 </VirtualHost>
 ```
 
 For HTTPS, the administrator will configure the appropriate HTTPS virtual host and certificate.
 
-Port `3000` does not need to be publicly exposed.
+Port `3001` does not need to be publicly exposed.
 
 ---
 
@@ -461,7 +407,7 @@ Browser
    ↓
 Apache
    ↓
-127.0.0.1:3000
+127.0.0.1:3001
    ↓
 Next.js
 ```
@@ -511,19 +457,19 @@ cd /var/www/fcbasulab/https
 Then verify:
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 show fcbasulab
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 show fcbasulab
 ```
 
 and:
 
 ```bash
-curl --noproxy "*" http://127.0.0.1:3000
+curl --noproxy "*" http://127.0.0.1:3001
 ```
 
 Check logs if required:
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 logs fcbasulab --lines 100
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 logs fcbasulab --lines 100
 ```
 
 ---
@@ -552,15 +498,15 @@ PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 logs fcbasulab --lines 100
 - [ ] Bundled `.next/standalone/.env` is removed if present.
 - [ ] Node 24 is available.
 - [ ] PM2 is online.
-- [ ] PM2 uses `/var/www/fcbasulab/https/.pm2`.
+- [ ] PM2 uses `/var/www/fcbasulab/https/pm2-home`.
 - [ ] `pm2 show fcbasulab` reports Node 24.
-- [ ] `curl --noproxy "*" http://127.0.0.1:3000` works.
+- [ ] `curl --noproxy "*" http://127.0.0.1:3001` works.
 - [ ] PM2 logs contain no startup errors.
 
 ## Public site
 
 - [ ] Apache/web server reverse proxy is configured.
-- [ ] Domain routes to `127.0.0.1:3000`.
+- [ ] Domain routes to `127.0.0.1:3001`.
 - [ ] HTTPS configuration is handled by the administrator.
 - [ ] Site is ready for internal security audit.
 
@@ -582,7 +528,7 @@ node -v
 Then verify PM2:
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 show fcbasulab
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 show fcbasulab
 ```
 
 It should report Node 24.
@@ -592,13 +538,13 @@ It should report Node 24.
 Check:
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 logs fcbasulab --lines 100
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 logs fcbasulab --lines 100
 ```
 
 Also:
 
 ```bash
-PM2_HOME="/var/www/fcbasulab/https/.pm2" pm2 show fcbasulab
+PM2_HOME="/var/www/fcbasulab/https/pm2-home" pm2 show fcbasulab
 ```
 
 Check:
@@ -614,7 +560,7 @@ Check:
 If:
 
 ```bash
-curl --noproxy "*" http://127.0.0.1:3000
+curl --noproxy "*" http://127.0.0.1:3001
 ```
 
 works but:
@@ -674,9 +620,9 @@ The complete process should remain:
         ↓
 10. Verify PM2
         ↓
-11. Test 127.0.0.1:3000
+11. Test 127.0.0.1:3001
         ↓
-12. Apache routes domain → 127.0.0.1:3000
+12. Apache routes domain → 127.0.0.1:3001
         ↓
 13. Site ready for internal audit
 ```
