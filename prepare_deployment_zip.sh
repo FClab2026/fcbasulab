@@ -12,8 +12,6 @@ echo "[0/5] Cleaning up previous build artifacts..."
 rm -rf .next
 rm -rf node_modules
 
-npm ci
-
 echo ""
 echo "[1/5] Installing dependencies..."
 
